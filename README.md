@@ -1,145 +1,59 @@
-# README: Muscular Framework #
+# Muscles CLI
 
-```bash
+`muscles-cli` is the console runtime for Muscles. It uses the same application
+shape as the HTTP runtimes: an `ApplicationMeta` class owns a `Context`, and the
+context delegates execution to `CliStrategy`.
 
-pybabel extract --mapping-file=/apps/app/babelrc --keywords=_ --keywords=_l --keywords=t --keywords=locale --output-file=/apps/gitmodules/muscles/locales/message.pot /apps/gitmodules/muscles/src
-
-pybabel init --domain=message --input-file=/apps/gitmodules/muscles/locales/message.pot --output-dir=/apps/gitmodules/muscles/locales --locale=en
-
-pybabel update --domain=message --input-file=/apps/gitmodules/muscles/locales/message.pot --output-dir=/apps/gitmodules/muscles/locales --locale=en
-
-pybabel compile --domain=message --directory=/apps/gitmodules/muscles/locales
-
-```
-
-### Plans ###
-
-#### Completed ####
-- cli
-- http with wsgi
-- http with server
-- request
-- response
-- redirect
-- header
-- test for wsgi
-- test for http
-- test for cli
-- test for redirect
-- html template
-
-
-#### Must ####
-
-- route with param and alias (main.index)
-- test for abort
-- configuration
-- auto restart
-- documentation
-
-
-### Routers ###
+## Quick Start
 
 ```python
-from muscles.http import routes, Response
-
-def http_main(request):
-    body = '<html><head></head><body>'
-    body += f'#HalloMuscularWorld'
-    body += '</body></html>'
-    return body
+from muscles import ApplicationMeta, Context, cli
+from muscles.cli import CliStrategy
 
 
-@routes.init('/init', method='GET', content_type='text/html')
-def main_test1(request):
-    body = '<html><head></head><body>'
-    body += f'#init GET'
-    body += '</body></html>'
-    return body
+class App(metaclass=ApplicationMeta):
+    context = Context(CliStrategy)
+
+    def run(self, *args):
+        return self.context.execute(*args, shutup=True)
 
 
-@routes.init('/init', method='PUT', content_type='application/json')
-def main_test1(request):
-    return [{"init": "PUT"}]
+@cli.group()
+def bookings(*args):
+    """Booking commands."""
+    return True
 
 
-@routes.init('/init', method='LINK', redirect='http://localhost:8080/test')
-def main_test1(request):
-    return [{"init": "PUT"}]
+@bookings.command(command_name="remove")
+def remove_booking(*args):
+    booking_id = args[0]
+    return f"removed {booking_id}"
 
 
-@routes.init('/init', method='DELETE', redirect=(308, '/test'))
-def main_test1(request):
-    return [{"init": "PUT"}]
-
-
-@routes.init('/init', method='GET', content_type='application/json')
-def main_test1(request):
-    return {"init": "GET"}
-
-
-@routes.init('/init', method='POST')
-def main_test1(request):
-    body = '<html><head></head><body>'
-    body += f'#init POST'
-    body += '</body></html>'
-    return body
-
-
-def http_main(request):
-    body = '<html><head></head><body>'
-    body += f'#HalloMuscularWorld'
-    body += '</body></html>'
-    # await asyncio.sleep(5)
-    # time.sleep(5)
-    return body
-
-
-def http_main1(request):
-    body = '<html><head></head><body>'
-    body += f'#HalloMuscularWorld 111'
-    body += '</body></html>'
-    return Response(200, body=body)
-
-
-def http_main2(request):
-    body = '<html><head></head><body>'
-    body += f'#HalloMuscularWorld 111'
-    body += '</body></html>'
-    headers = [('Star', 1)]
-    return (body, 200, headers)
-
-
-def http_main3(request):
-    body = '<html><head></head><body>'
-    body += f'#HalloMuscularWorld 111'
-    body += '</body></html>'
-    headers = [('Star', 1)]
-    return (body, 404, headers)
-
-
-routes.add('/', http_main, method='GET')
-routes.add('/test', http_main1, method='*')
-routes.add('/test2', http_main2, method='*')
-routes.add('/test3', http_main3, method='*')
-
+app = App()
+assert app.run("bookings", "remove", "1") == "removed 1"
 ```
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+## Routing Model
 
-### Contribution guidelines ###
+Groups and commands form a tree. That makes CLI routing close to HTTP routing:
 
-* Writing tests
-* Code review
-* Other guidelines
+- `bookings remove 1` is a nested route with an argument;
+- `bookings/list` can be normalized by an application before calling the CLI;
+- groups can have handlers, but returning `True` lets execution continue to a
+  child command.
 
-### Who do I talk to? ###
+More detail: [docs/routing.md](docs/routing.md).
 
-* Repo owner or admin
-* Other community or team contact
+## Arguments
+
+Use `@cli.argument()` for named arguments and `@cli.flag()` for boolean flags.
+Required prompted arguments use `input()` or `getpass.getpass()` when hidden.
+
+## Development
+
+Run tests with the core package on `PYTHONPATH`:
+
+```bash
+PYTHONPATH=../muscles/src:src python -m pytest -q
+```

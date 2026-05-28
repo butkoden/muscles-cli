@@ -4,6 +4,7 @@ from typing import List
 from functools import wraps
 from typing import Dict
 import os
+import shutil
 from .colory import Colors
 from .func import argsparse, parse_arguments
 from .cli import CliCommand
@@ -17,7 +18,8 @@ def print_help(instance):
     :return:
     """
     try:
-        rows, columns = os.popen('stty size', 'r').read().split()
+        size = shutil.get_terminal_size(fallback=(100, 50))
+        rows, columns = size.lines, size.columns
     except:
         rows = 50
         columns = 100
@@ -450,6 +452,7 @@ class Group(CliCommand):
         self._parent = None
         self._command_name = command_name if command_name else '-'.join(key)
         self._arguments = []
+        self._children_by_command = {}
 
     def __repr__(self):
         return "Group(%s)" % ', '.join([
@@ -509,6 +512,7 @@ class Group(CliCommand):
         :return:
         """
         self._children.append(command)
+        self._children_by_command[command.command_name] = command
         command.parent = self
 
     def remove(self, command: (Command, Group)) -> None:
@@ -518,7 +522,8 @@ class Group(CliCommand):
         :param command: объект группы или команды
         :return:
         """
-        self._children.remove(command.key)
+        self._children.remove(command)
+        self._children_by_command.pop(command.command_name, None)
         command.parent = None
 
     def execute(self, *args, **_kwargs):
@@ -544,13 +549,13 @@ class Group(CliCommand):
                 params.update({argument.dest: kwargs.get(argument.dest, argument.default)})
         result = self.handler(*args, **params)
         if len(args) >= 1:
-            for command in self._children:
-                if len(args[0:1]) > 0 and command.command_name == args[0:1][0]:
-                    return command.execute(*args[1:], **kwargs)
+            command = self._children_by_command.get(args[0])
+            if command:
+                return command.execute(*args[1:], **kwargs)
             print(f"\n")
 
             if len(args[0]) > 0:
-                Exception("Command `%s` not found" % args[0])
+                raise Exception("Command `%s` not found" % args[0])
         return result
 
     def help(self, *args, **kwargs):
@@ -566,10 +571,8 @@ class Group(CliCommand):
     def _help(self, args, command):
         if len(args) > 0:
             args, _command = args[1:] if len(args[1:]) > 0 else [], args[0:1][0] if len(args[0:1]) > 0 else None
-            if hasattr(command, '_children') and len(command._children) > 0:
-                for c in command._children:
-                    if c.command_name == _command:
-                        self._help(args, c)
+            if hasattr(command, '_children_by_command') and _command in command._children_by_command:
+                self._help(args, command._children_by_command[_command])
         else:
             return print_help(command)
 

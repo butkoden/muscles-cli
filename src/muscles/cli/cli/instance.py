@@ -2,6 +2,7 @@ from __future__ import annotations
 from .command import Group, Command
 
 import os
+import shutil
 
 
 class Console:
@@ -12,7 +13,8 @@ class Console:
     """
 
     try:
-        rows, columns = os.popen('stty size', 'r').read().split()
+        size = shutil.get_terminal_size(fallback=(100, 50))
+        rows, columns = size.lines, size.columns
     except BaseException as e:
         rows = 50
         columns = 100
@@ -43,4 +45,3 @@ console = Console()
 
 
 cli = console.root_group
-
