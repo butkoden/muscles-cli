@@ -135,7 +135,7 @@ def parse_arguments(argument_list, args):
 
         if argument.required and argument.dest not in kwargs:
             if argument.prompt:
-                value = getpass.getpass(argument.prompt) if argument.hide else input(f"{argument.prompt}: ").strip()
+                value = getpass.getpass(argument.prompt) if argument.hide else input(argument.prompt).strip()
                 kwargs[argument.dest] = value.strip()
             else:
                 raise ValueError(

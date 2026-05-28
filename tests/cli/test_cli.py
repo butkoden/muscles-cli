@@ -1,9 +1,11 @@
 import sys
+import pytest
 from muscles import ApplicationMeta
 from muscles import Context
-from ...src.muscles.cli.cli import Console
-from ...src.muscles.cli.cli import cli
-from ...src.muscles.cli.cli import CliStrategy
+from muscles.cli.cli import Console
+from muscles.cli.cli import cli
+from muscles.cli.cli import CliStrategy
+from muscles.cli.cli.command import Command, Group
 from unittest.mock import patch
 import io
 
@@ -251,8 +253,25 @@ def test_cli_subgroup():
     result = m.run('test_7_0', 'test_7_1', 'test_7_2')
     assert result == 2
 
-    result = m.run('test_7_1')
-    assert result == None
+    with pytest.raises(Exception, match="Command `test_7_1` not found"):
+        m.run('test_7_1')
+
+
+def test_cli_group_command_index_updates_on_add_and_remove():
+    group = Group(['root'], handler=lambda *args: 'root')
+    command = Command(['child'], handler=lambda *args: 'child')
+    command.command_name = 'child'
+
+    group.add(command)
+
+    assert group._children_by_command['child'] is command
+    assert group.execute('child') == 'child'
+
+    group.remove(command)
+
+    assert 'child' not in group._children_by_command
+    with pytest.raises(Exception, match="Command `child` not found"):
+        group.execute('child')
 
 
 def test_cli_help():
@@ -318,4 +337,3 @@ def test_cli_help():
     assert " --arg62_2, -a62_2   Argument 62_2" in captured_output.getvalue().strip()
     assert " --arg62, -a62       Argument 62" in captured_output.getvalue().strip()
     assert " --arg62, -a62       Argument 63" not in captured_output.getvalue().strip()
-

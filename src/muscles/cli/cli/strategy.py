@@ -2,6 +2,7 @@ from muscles.core import BaseStrategy
 import os
 import io
 import sys
+import shutil
 from typing import List, Optional
 from .colory import Colors
 from .instance import cli, Console
@@ -26,7 +27,8 @@ class CliStrategy(BaseStrategy):
 
     """
     try:
-        rows, columns = os.popen('stty size', 'r').read().split()
+        size = shutil.get_terminal_size(fallback=(100, 50))
+        rows, columns = size.lines, size.columns
     except:
         rows = 50
         columns = 100
@@ -78,4 +80,3 @@ class CliStrategy(BaseStrategy):
             return result
         except KeyboardInterrupt:
             print(f"\n\n{Colors.WARNING}The programme was terminated (Ctrl+C).{Colors.ENDC}")
-
