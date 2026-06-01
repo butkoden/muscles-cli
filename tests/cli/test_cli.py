@@ -318,7 +318,7 @@ def test_cli_help():
     assert "test_6_0             - test 6 0" in captured_output.getvalue().strip()
     assert "Muscular" in captured_output.getvalue().strip()
     assert "CLI" in captured_output.getvalue().strip()
-    assert "(c) Butko Denis" in captured_output.getvalue().strip()
+    assert "(c) Muscles Team" in captured_output.getvalue().strip()
 
     captured_output = io.StringIO()
 
@@ -337,3 +337,19 @@ def test_cli_help():
     assert " --arg62_2, -a62_2   Argument 62_2" in captured_output.getvalue().strip()
     assert " --arg62, -a62       Argument 62" in captured_output.getvalue().strip()
     assert " --arg62, -a62       Argument 63" not in captured_output.getvalue().strip()
+
+
+def test_check_custom_cli_header_author():
+    class TestApp(metaclass=ApplicationMeta):
+        context = Context(CliStrategy)
+        console = Console()
+
+        def run(self, *args):
+            return self.context.execute(*args, shutup=False, author="(c) Custom Author")
+
+    m = TestApp()
+    captured_output = io.StringIO()
+    sys.stdout = captured_output
+    m.run('help')
+    sys.stdout = sys.__stdout__
+    assert "(c) Custom Author" in captured_output.getvalue().strip()
