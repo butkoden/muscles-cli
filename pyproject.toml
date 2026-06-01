@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "muscles-cli"
 version = "0.0.2"
-description = ""
+description = "Muscles CLI runtime for shared command routing and strategy execution"
 authors = ["Denis B. <denis@butko.info>"]
 packages = [{include = "muscles", from = "src", to = "muscles.cli"}]
 
@@ -27,3 +27,5 @@ jsonschema = "==4.16.0"
 [tool.poetry.dev-dependencies]
 # Зависимости для разработки
 
+[tool.poetry.scripts]
+muscles = "muscles.cli.tooling:main"
