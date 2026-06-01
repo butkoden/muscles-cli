@@ -1,0 +1,3 @@
+CLI_HEADER_TITLE = "Muscular"
+CLI_HEADER_SUBTITLE = "CLI"
+CLI_HEADER_AUTHOR = "(c) Muscles Team"
