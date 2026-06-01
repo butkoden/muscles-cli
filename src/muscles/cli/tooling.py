@@ -10,6 +10,8 @@ from pathlib import Path
 
 from muscles.core import inspect_application
 from muscles.core import resolve_runtime_mode
+from muscles.core import GenerationRequest
+from .providers import default_generator_registry
 
 APP_TEMPLATE = """from muscles import ApplicationMeta, Configurator, Context
 from muscles.{runtime} import {strategy}
@@ -155,13 +157,6 @@ def scaffold_project(target: Path, runtime: str = "asgi", force: bool = False) -
     return created
 
 
-def _safe_write_file(path: Path, content: str, force: bool) -> str:
-    if path.exists() and not force:
-        raise FileExistsError(f"File `{path}` already exists. Use --force to overwrite.")
-    _write(path, content)
-    return str(path)
-
-
 def generate_artifact(
     project_root: Path,
     generator_type: str,
@@ -174,59 +169,17 @@ def generate_artifact(
         raise FileNotFoundError("Muscles project not detected: `app/` directory is missing.")
 
     generator_type = generator_type.lower()
-    slug = name.replace(".", "_").replace("-", "_").lower()
-    generated: list[str] = []
-
-    if generator_type == "page":
-        generated.append(
-            str(Path(_safe_write_file(app_dir / "web" / f"{slug}.py", f"def {slug}(*args, **kwargs):\n    return '{name}'\n", force)).relative_to(project_root))
-        )
-        if with_tests:
-            generated.append(
-                str(Path(_safe_write_file(project_root / "tests" / f"test_page_{slug}.py", f"def test_page_{slug}():\n    assert True\n", force)).relative_to(project_root))
-            )
-    elif generator_type == "api-resource":
-        generated.append(
-            str(Path(_safe_write_file(app_dir / "api" / f"{slug}.py", f"def create_{slug}(*args, **kwargs):\n    return {{'resource': '{name}'}}\n", force)).relative_to(project_root))
-        )
-        generated.append(
-            str(Path(_safe_write_file(app_dir / "schemas" / f"{slug}.py", f"class {name}Schema:\n    pass\n", force)).relative_to(project_root))
-        )
-        if with_tests:
-            generated.append(
-                str(Path(_safe_write_file(project_root / "tests" / f"test_api_{slug}.py", f"def test_api_{slug}():\n    assert True\n", force)).relative_to(project_root))
-            )
-    elif generator_type == "cli-command":
-        generated.append(
-            str(Path(_safe_write_file(app_dir / "cli" / f"{slug}.py", f"def {slug}(*args, **kwargs):\n    return True\n", force)).relative_to(project_root))
-        )
-        if with_tests:
-            generated.append(
-                str(Path(_safe_write_file(project_root / "tests" / f"test_cli_{slug}.py", f"def test_cli_{slug}():\n    assert True\n", force)).relative_to(project_root))
-            )
-    elif generator_type == "value-object":
-        generated.append(
-            str(Path(_safe_write_file(app_dir / "domain" / f"{slug}.py", f"class {name}:\n    pass\n", force)).relative_to(project_root))
-        )
-        if with_tests:
-            generated.append(
-                str(Path(_safe_write_file(project_root / "tests" / f"test_value_object_{slug}.py", f"def test_value_object_{slug}():\n    assert True\n", force)).relative_to(project_root))
-            )
-    elif generator_type == "resource":
-        generated.extend(
-            generate_artifact(project_root, "api-resource", name, force=force, with_tests=False)
-        )
-        generated.extend(
-            generate_artifact(project_root, "cli-command", name, force=force, with_tests=False)
-        )
-        if with_tests:
-            generated.append(
-                str(Path(_safe_write_file(project_root / "tests" / f"test_resource_{slug}.py", f"def test_resource_{slug}():\n    assert True\n", force)).relative_to(project_root))
-            )
-    else:
-        raise ValueError(f"Unsupported generator type `{generator_type}`")
-
-    return generated
+    registry = default_generator_registry()
+    provider = registry.resolve(generator_type)
+    return provider.generate(
+        project_root=project_root,
+        request=GenerationRequest(
+            generator_type=generator_type,
+            name=name,
+            force=force,
+            with_tests=with_tests,
+        ),
+    )
 
 
 def detect_project_root(start: Path | None = None) -> Path:
@@ -328,7 +281,7 @@ def _build_parser() -> argparse.ArgumentParser:
     inspect_parser.add_argument("--app", required=False, help="Entrypoint in module:ClassOrObject format")
     inspect_parser.add_argument("--json", action="store_true", help="JSON output")
 
-    for command_name in ("routes", "schemas", "rules", "cli"):
+    for command_name in ("actions", "routes", "schemas", "rules", "cli", "sql"):
         command_parser = subparsers.add_parser(command_name, help=f"Inspect {command_name}")
         command_parser.add_argument("--app", required=False, help="Entrypoint in module:ClassOrObject format")
         command_parser.add_argument("--json", action="store_true", help="JSON output")
@@ -400,18 +353,22 @@ def main(argv: list[str] | None = None) -> int:
             print(f" - {item['name']}: {item['syntax']}")
         return 0
 
-    if args.command in {"inspect", "routes", "schemas", "rules", "cli"}:
+    if args.command in {"inspect", "actions", "routes", "schemas", "rules", "cli", "sql"}:
         payload = build_inspection_payload(app_entrypoint=getattr(args, "app", None))
         if args.command == "inspect":
             data = payload
+        elif args.command == "actions":
+            data = {"actions": payload.get("actions", [])}
         elif args.command == "routes":
             data = {"routes": payload.get("routes", [])}
         elif args.command == "schemas":
             data = {"schemas": payload.get("schemas", [])}
         elif args.command == "rules":
             data = {"rules": payload.get("rules", [])}
+        elif args.command == "sql":
+            data = {"sql": payload.get("sql", [])}
         else:
-            data = {"commands": payload.get("commands", [])}
+            data = {"cli": payload.get("cli", payload.get("commands", []))}
 
         if getattr(args, "json", False):
             print(json.dumps(data, ensure_ascii=False, indent=2))
