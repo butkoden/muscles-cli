@@ -10,6 +10,7 @@ def test_capabilities_payload_contains_contract_and_commands(monkeypatch):
     assert payload["capabilities_contract_version"] == "1"
     assert payload["framework"] == "Muscles"
     assert payload["runtime_mode"] == "development"
+    assert payload["performance_contract"]["di_signature_cached"] is True
 
     names = [item["name"] for item in payload["commands"]]
     for required in ("new", "inspect", "doctor", "generate", "test", "capabilities"):
