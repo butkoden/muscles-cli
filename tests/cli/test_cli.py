@@ -399,3 +399,26 @@ def test_cli_nested_command_unknown_option_raises_value_error():
 
     with pytest.raises(ValueError, match=r"Invalid argument: --unknown"):
         m.run('bookings', '--unknown')
+
+
+def test_cli_nested_limit_accepts_space_and_equals_forms():
+    class TestApp(metaclass=ApplicationMeta):
+        context = Context(CliStrategy)
+        console = Console()
+
+        def run(self, *args):
+            return self.context.execute(*args, shutup=True)
+
+    m = TestApp()
+
+    @cli.group(command_name='bookings_bench')
+    def bookings_bench(*args):
+        return True
+
+    @bookings_bench.command(command_name='list')
+    @bookings_bench.argument('--limit', nargs=1, default='25')
+    def bookings_bench_list(*args, limit):
+        return limit
+
+    assert m.run('bookings_bench', 'list', '--limit', '10') == '10'
+    assert m.run('bookings_bench', 'list', '--limit=10') == '10'

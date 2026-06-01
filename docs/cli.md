@@ -112,6 +112,28 @@ def drop(*args):
 - `hide` - если указана в True, то позволяет подавить введенное значение так что бы оно не осталось в истории. 
 - Полезно применять для ввода таких значений как пароль (по умолчанию = `False`).
 
+### Nested commands: canonical options binding
+
+Для вложенных команд опции нужно вешать на объект родительской группы/роута, а не на корневой `@cli`:
+
+```python
+@cli.group(command_name='bookings')
+def bookings(*args):
+    return True
+
+@bookings.command(command_name='list')
+@bookings.argument('--limit', nargs=1, default='25')
+def bookings_list(*args, limit):
+    return limit
+```
+
+Каноничные варианты вызова для benchmark/automation:
+
+```bash
+bookings list --limit 10
+bookings list --limit=10
+```
+
 
 #### Пример
 ```python
