@@ -37,3 +37,6 @@ def test_build_inspection_payload_from_app():
     payload = build_inspection_payload(app=FakeApp())
     assert payload["contract_version"] == "1"
     assert payload["routes"][0]["path"] == "/api/v1/ping"
+    assert "actions" in payload
+    assert "cli" in payload
+    assert "sql" in payload
