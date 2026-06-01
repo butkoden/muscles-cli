@@ -84,6 +84,26 @@ More detail: [docs/routing.md](docs/routing.md).
 Use `@cli.argument()` for named arguments and `@cli.flag()` for boolean flags.
 Required prompted arguments use `input()` or `getpass.getpass()` when hidden.
 
+For nested commands, define options on the parent group object:
+
+```python
+@cli.group(command_name="bookings")
+def bookings(*args):
+    return True
+
+@bookings.command(command_name="list")
+@bookings.argument("--limit", nargs=1, default="25")
+def bookings_list(*args, limit):
+    return limit
+```
+
+Canonical invocations for benchmark/automation scripts:
+
+```bash
+bookings list --limit 10
+bookings list --limit=10
+```
+
 ## Development
 
 Run tests with the core package on `PYTHONPATH`:
