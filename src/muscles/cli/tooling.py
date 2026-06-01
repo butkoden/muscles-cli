@@ -4,6 +4,7 @@ import argparse
 import importlib
 import json
 import os
+import sys
 import shutil
 import subprocess
 from pathlib import Path
@@ -255,6 +256,8 @@ def run_project_tests(project_root: Path) -> int:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="muscles")
     parser.add_argument("--json", action="store_true", help="JSON output when supported")
+    parser.add_argument("--machine", action="store_true", help="Machine-readable mode (stdout JSON only)")
+    parser.add_argument("--quiet", action="store_true", help="Quiet mode")
     subparsers = parser.add_subparsers(dest="command")
 
     new_parser = subparsers.add_parser("new", help="Create a new Muscles project")
@@ -339,97 +342,131 @@ def build_capabilities_payload() -> dict:
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
+    machine_mode = getattr(args, "machine", False)
+    quiet_mode = getattr(args, "quiet", False)
 
-    if args.command == "capabilities":
-        payload = build_capabilities_payload()
-        as_json = getattr(args, "json", False) or getattr(args, "json", False)
-        if as_json:
-            print(json.dumps(payload, ensure_ascii=False, indent=2))
+    def _emit(data, as_json: bool = False, *, stderr: bool = False):
+        stream = sys.stderr if stderr else sys.stdout
+        if machine_mode or as_json:
+            stream.write(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+        elif not quiet_mode:
+            stream.write(f"{data}\n")
+
+    try:
+        if args.command == "capabilities":
+            payload = build_capabilities_payload()
+            as_json = getattr(args, "json", False) or machine_mode
+            if as_json:
+                _emit(payload, as_json=True)
+                return 0
+            _emit("Muscles capabilities")
+            _emit(f"runtime_mode: {payload['runtime_mode']}")
+            _emit("commands:")
+            for item in payload["commands"]:
+                _emit(f" - {item['name']}: {item['syntax']}")
             return 0
-        print("Muscles capabilities")
-        print(f"runtime_mode: {payload['runtime_mode']}")
-        print("commands:")
-        for item in payload["commands"]:
-            print(f" - {item['name']}: {item['syntax']}")
-        return 0
 
-    if args.command in {"inspect", "actions", "routes", "schemas", "rules", "cli", "sql"}:
-        payload = build_inspection_payload(app_entrypoint=getattr(args, "app", None))
-        if args.command == "inspect":
-            data = payload
-        elif args.command == "actions":
-            data = {"actions": payload.get("actions", [])}
-        elif args.command == "routes":
-            data = {"routes": payload.get("routes", [])}
-        elif args.command == "schemas":
-            data = {"schemas": payload.get("schemas", [])}
-        elif args.command == "rules":
-            data = {"rules": payload.get("rules", [])}
-        elif args.command == "sql":
-            data = {"sql": payload.get("sql", [])}
-        else:
-            data = {"cli": payload.get("cli", payload.get("commands", []))}
+        if args.command in {"inspect", "actions", "routes", "schemas", "rules", "cli", "sql"}:
+            payload = build_inspection_payload(app_entrypoint=getattr(args, "app", None))
+            if args.command == "inspect":
+                data = payload
+            elif args.command == "actions":
+                data = {"actions": payload.get("actions", [])}
+            elif args.command == "routes":
+                data = {"routes": payload.get("routes", [])}
+            elif args.command == "schemas":
+                data = {"schemas": payload.get("schemas", [])}
+            elif args.command == "rules":
+                data = {"rules": payload.get("rules", [])}
+            elif args.command == "sql":
+                data = {"sql": payload.get("sql", [])}
+            else:
+                data = {"cli": payload.get("cli", payload.get("commands", []))}
 
-        if getattr(args, "json", False):
-            print(json.dumps(data, ensure_ascii=False, indent=2))
-        else:
-            print(data)
-        return 0
+            if getattr(args, "json", False) or machine_mode:
+                _emit(data, as_json=True)
+            else:
+                _emit(data)
+            return 0
 
-    if args.command == "generate":
-        generated = generate_artifact(
-            project_root=Path.cwd(),
-            generator_type=args.generator_type,
-            name=args.name,
-            force=args.force,
-            with_tests=args.with_tests,
-        )
-        print("Generated files:")
-        for item in generated:
-            print(f" - {item}")
-        print("Next steps:")
-        print("  muscles inspect --json")
-        print("  muscles test")
-        return 0
+        if args.command == "generate":
+            generated = generate_artifact(
+                project_root=Path.cwd(),
+                generator_type=args.generator_type,
+                name=args.name,
+                force=args.force,
+                with_tests=args.with_tests,
+            )
+            if machine_mode:
+                _emit({"status": "ok", "generated": generated}, as_json=True)
+                return 0
+            _emit("Generated files:")
+            for item in generated:
+                _emit(f" - {item}")
+            _emit("Next steps:")
+            _emit("  muscles inspect --json")
+            _emit("  muscles test")
+            return 0
 
-    if args.command == "doctor":
-        root = detect_project_root()
-        report = run_doctor(root)
-        if getattr(args, "json", False):
-            print(json.dumps(report, ensure_ascii=False, indent=2))
-        else:
-            print(report)
-        return 0 if len(report["errors"]) == 0 else 2
-
-    if args.command == "test":
-        root = detect_project_root()
-        if getattr(args, "doctor", False):
+        if args.command == "doctor":
+            root = detect_project_root()
             report = run_doctor(root)
-            if len(report["errors"]) > 0:
-                print("Doctor failed. Fix errors before test run.")
-                print(json.dumps(report, ensure_ascii=False, indent=2))
-                return 2
-        return run_project_tests(root)
+            if getattr(args, "json", False) or machine_mode:
+                _emit(report, as_json=True)
+            else:
+                _emit(report)
+            return 0 if len(report["errors"]) == 0 else 2
 
-    if args.command != "new":
-        if getattr(args, "json", False):
+        if args.command == "test":
+            root = detect_project_root()
+            if getattr(args, "doctor", False):
+                report = run_doctor(root)
+                if len(report["errors"]) > 0:
+                    if machine_mode:
+                        _emit({"status": "error", "report": report}, as_json=True, stderr=True)
+                    else:
+                        _emit("Doctor failed. Fix errors before test run.")
+                        _emit(report, as_json=True)
+                    return 2
+            return run_project_tests(root)
+
+        if args.command != "new":
             help_payload = {
                 "framework": "Muscles",
                 "commands": ["new", "capabilities"],
                 "status": "ok",
             }
-            print(json.dumps(help_payload, ensure_ascii=False, indent=2))
-            return 0
-        parser.print_help()
-        return 1
+            if getattr(args, "json", False) or machine_mode:
+                _emit(help_payload, as_json=True)
+                return 0
+            parser.print_help()
+            return 1
 
-    target = Path.cwd() / args.project_name
-    files = scaffold_project(target=target, runtime=args.runtime, force=args.force)
-    print(f"Created project at: {target}")
-    print("Generated files:")
-    for file_name in files:
-        print(f" - {file_name}")
-    print("Next steps:")
-    print(f"  cd {args.project_name}")
-    print("  PYTHONPATH=. python -m pytest -q")
-    return 0
+        target = Path.cwd() / args.project_name
+        files = scaffold_project(target=target, runtime=args.runtime, force=args.force)
+        if machine_mode:
+            _emit({"status": "ok", "target": str(target), "generated": files}, as_json=True)
+            return 0
+        _emit(f"Created project at: {target}")
+        _emit("Generated files:")
+        for file_name in files:
+            _emit(f" - {file_name}")
+        _emit("Next steps:")
+        _emit(f"  cd {args.project_name}")
+        _emit("  PYTHONPATH=. python -m pytest -q")
+        return 0
+    except Exception as exc:
+        if machine_mode:
+            _emit(
+                {
+                    "status": "error",
+                    "error": {
+                        "type": exc.__class__.__name__,
+                        "message": str(exc),
+                    },
+                },
+                as_json=True,
+                stderr=True,
+            )
+            return 2
+        raise
