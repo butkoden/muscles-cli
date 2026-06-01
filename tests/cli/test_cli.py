@@ -353,3 +353,49 @@ def test_check_custom_cli_header_author():
     m.run('help')
     sys.stdout = sys.__stdout__
     assert "(c) Custom Author" in captured_output.getvalue().strip()
+
+
+def test_cli_nested_command_options_and_flags():
+    class TestApp(metaclass=ApplicationMeta):
+        context = Context(CliStrategy)
+        console = Console()
+
+        def run(self, *args):
+            return self.context.execute(*args, shutup=True)
+
+    m = TestApp()
+
+    @cli.group(command_name='bookings')
+    def bookings(*args):
+        return 'bookings'
+
+    @bookings.command(command_name='list')
+    @bookings.argument('--limit', nargs=1, default='25')
+    @bookings.argument('--offset', nargs=1, default='0')
+    @bookings.flag('--active')
+    def bookings_list(*args, limit, offset, active):
+        return {'args': args, 'limit': limit, 'offset': offset, 'active': active}
+
+    result = m.run('bookings', 'list', '--limit', '10', '--offset', '2', '--active', 'tag')
+    assert result == {'args': ('tag',), 'limit': '10', 'offset': '2', 'active': True}
+
+    result = m.run('bookings', 'list', '--limit=12', '--offset=4')
+    assert result == {'args': tuple(), 'limit': '12', 'offset': '4', 'active': False}
+
+
+def test_cli_nested_command_unknown_option_raises_value_error():
+    class TestApp(metaclass=ApplicationMeta):
+        context = Context(CliStrategy)
+        console = Console()
+
+        def run(self, *args):
+            return self.context.execute(*args, shutup=True)
+
+    m = TestApp()
+
+    @cli.group(command_name='bookings')
+    def bookings(*args):
+        return 'bookings'
+
+    with pytest.raises(ValueError, match=r"Invalid argument: --unknown"):
+        m.run('bookings', '--unknown')
