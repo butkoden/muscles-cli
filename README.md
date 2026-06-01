@@ -4,6 +4,40 @@
 shape as the HTTP runtimes: an `ApplicationMeta` class owns a `Context`, and the
 context delegates execution to `CliStrategy`.
 
+## Installation
+
+Canonical ecosystem install matrix is documented in core:
+[Muscles installation matrix](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
+
+## Project Scaffolding
+
+Use canonical command `muscles new`:
+
+```bash
+muscles new demo --runtime asgi
+muscles new demo --runtime wsgi
+muscles new demo --runtime cli
+```
+
+Notes:
+
+- `muscular new` is not a canonical command.
+- Existing non-empty directory is rejected unless `--force` is used.
+
+## AI Workflow Commands
+
+```bash
+muscles capabilities --json
+muscles inspect --json --app app.application:App
+muscles routes --app app.application:App
+muscles schemas --app app.application:App
+muscles rules --app app.application:App
+muscles cli --app app.application:App
+muscles generate page Home --with-tests
+muscles doctor --json
+muscles test --doctor
+```
+
 ## Quick Start
 
 ```python
