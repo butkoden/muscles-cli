@@ -305,7 +305,10 @@ def load_app_from_entrypoint(entrypoint: str):
 def build_inspection_payload(app=None, app_entrypoint: str | None = None) -> dict:
     if app is None and app_entrypoint:
         app = load_app_from_entrypoint(app_entrypoint)
-    return inspect_application(app=app)
+    payload = inspect_application(app=app)
+    payload.setdefault("performance_contract", {})
+    payload["performance_contract"]["di_signature_cached"] = True
+    return payload
 
 
 def build_capabilities_payload() -> dict:
@@ -323,6 +326,7 @@ def build_capabilities_payload() -> dict:
         "framework": "Muscles",
         "runtime_mode": runtime_mode,
         "project_detected": (Path.cwd() / "app").exists(),
+        "performance_contract": {"di_signature_cached": True},
         "commands": commands,
         "recommended_ai_workflow": [
             "muscles capabilities --json",

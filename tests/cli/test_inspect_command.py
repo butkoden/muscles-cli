@@ -40,3 +40,4 @@ def test_build_inspection_payload_from_app():
     assert "actions" in payload
     assert "cli" in payload
     assert "sql" in payload
+    assert payload["performance_contract"]["di_signature_cached"] is True
