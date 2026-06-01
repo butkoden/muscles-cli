@@ -7,6 +7,7 @@ from typing import List, Optional
 from .colory import Colors
 from .instance import cli, Console
 from .error_handler import ConsoleErrorHandler
+from .constants import CLI_HEADER_AUTHOR, CLI_HEADER_SUBTITLE, CLI_HEADER_TITLE
 
 
 class flushfile(object):
@@ -39,11 +40,13 @@ class CliStrategy(BaseStrategy):
 
         :return:
         """
-        author = '(c) Butko Denis'
+        author = getattr(self, "cli_author", CLI_HEADER_AUTHOR)
+        title = getattr(self, "cli_title", CLI_HEADER_TITLE)
+        subtitle = getattr(self, "cli_subtitle", CLI_HEADER_SUBTITLE)
         lines = [
             '-' * (int(self.columns) - 4),
-            'Muscular',
-            'CLI',
+            title,
+            subtitle,
             author.rjust(int(self.columns)-len(author)),
             '-' * (int(self.columns) - 4),
         ]
@@ -65,6 +68,9 @@ class CliStrategy(BaseStrategy):
         :return:
         """
         try:
+            self.cli_title = kwargs.get("title", CLI_HEADER_TITLE)
+            self.cli_subtitle = kwargs.get("subtitle", CLI_HEADER_SUBTITLE)
+            self.cli_author = kwargs.get("author", CLI_HEADER_AUTHOR)
             if shutup:
                 sys.stdout = io.StringIO()
                 print_header = False
