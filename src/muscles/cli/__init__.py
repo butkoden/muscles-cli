@@ -16,6 +16,8 @@ from .tooling import generate_artifact
 from .tooling import detect_project_root
 from .tooling import run_doctor
 from .tooling import run_project_tests
+from .streaming import CliStreamRenderResult
+from .streaming import render_stream_result
 
 
 __all__ = (
@@ -36,5 +38,7 @@ __all__ = (
     "detect_project_root",
     "run_doctor",
     "run_project_tests",
+    "CliStreamRenderResult",
+    "render_stream_result",
     "main",
 )
