@@ -122,6 +122,21 @@ def parse_arguments(argument_list, args):
     unused_args = list(args)
 
     for argument in argument_list:
+        if argument.argument:
+            prefix = f"{argument.argument}="
+            for idx, token in enumerate(list(unused_args)):
+                if isinstance(token, str) and token.startswith(prefix):
+                    value = token[len(prefix):]
+                    unused_args[idx:idx + 1] = [argument.argument, value]
+                    break
+        if argument.short:
+            prefix = f"{argument.short}="
+            for idx, token in enumerate(list(unused_args)):
+                if isinstance(token, str) and token.startswith(prefix):
+                    value = token[len(prefix):]
+                    unused_args[idx:idx + 1] = [argument.short, value]
+                    break
+
         if argument.dest not in kwargs and argument.default is not None:
             kwargs[argument.dest] = argument.default
 

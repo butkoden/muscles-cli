@@ -543,6 +543,8 @@ class Group(CliCommand):
         # args, kwargs = argsparse(arguments, args)
         args, kwargs = parse_arguments(arguments, args)
         kwargs.update(_kwargs)
+        if len(args) >= 1 and isinstance(args[0], str) and args[0].startswith('-'):
+            raise ValueError(f"Invalid argument: {args[0]}")
         params = {}
         if hasattr(self.handler, 'arguments'):
             for argument in self.handler.arguments:
