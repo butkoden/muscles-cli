@@ -20,7 +20,7 @@ from muscles.{runtime} import {strategy}
 
 class App(metaclass=ApplicationMeta):
     config = Configurator(obj={{"main": {{"HOST": "0.0.0.0", "PORT": "8080"}}}})
-    context = Context({strategy}, {{}})
+    context = Context({strategy}, params={{}})
 
     def run(self, *args):
         return self.context.execute(*args, shutup=True)
@@ -31,7 +31,7 @@ from muscles.cli import CliStrategy, cli
 
 
 class App(metaclass=ApplicationMeta):
-    context = Context(CliStrategy, {{}})
+    context = Context(CliStrategy, params={{}})
 
     def run(self, *args):
         return self.context.execute(*args, shutup=True)

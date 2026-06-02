@@ -1,8 +1,8 @@
 from muscles.core import BaseStrategy
-import os
 import io
 import sys
 import shutil
+import shlex
 from typing import List, Optional
 from .colory import Colors
 from .instance import cli, Console
@@ -53,6 +53,24 @@ class CliStrategy(BaseStrategy):
         for line in lines:
             print(f"{Colors.HEADER}--{line.center(int(self.columns)-4)}--{Colors.ENDC}")
 
+    @staticmethod
+    def _resolve_root_group(context, kwargs) -> object | None:
+        root_group = kwargs.get('root_group')
+        if root_group is not None:
+            return root_group
+
+        if hasattr(context, 'param'):
+            try:
+                return context.param('root_group')
+            except Exception:
+                pass
+
+        try:
+            from .instance import cli as default_root_group
+        except Exception:
+            return None
+        return default_root_group
+
     def execute(self, *args,
                 error_handler: Optional[ConsoleErrorHandler] = None,
                 shutup=False,
@@ -71,6 +89,7 @@ class CliStrategy(BaseStrategy):
             self.cli_title = kwargs.get("title", CLI_HEADER_TITLE)
             self.cli_subtitle = kwargs.get("subtitle", CLI_HEADER_SUBTITLE)
             self.cli_author = kwargs.get("author", CLI_HEADER_AUTHOR)
+            container = kwargs.get('container')
             if shutup:
                 sys.stdout = io.StringIO()
                 print_header = False
@@ -78,9 +97,10 @@ class CliStrategy(BaseStrategy):
                 self._print_header()
             if len(args) <= 0:
                 args = sys.argv[1:]
-            # console = Console()
-            # result = console.root_group.execute(*args, {})
-            result = cli.execute(*args)
+            elif len(args) == 1 and isinstance(args[0], str):
+                args = tuple(shlex.split(args[0]))
+            root_group = self._resolve_root_group(container, kwargs)
+            result = root_group.execute(*args)
             if shutup:
                 sys.stdout = sys.__stdout__
             return result

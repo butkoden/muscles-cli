@@ -422,3 +422,26 @@ def test_cli_nested_limit_accepts_space_and_equals_forms():
 
     assert m.run('bookings_bench', 'list', '--limit', '10') == '10'
     assert m.run('bookings_bench', 'list', '--limit=10') == '10'
+
+
+def test_cli_nested_limit_accepts_single_command_line_string():
+    class TestApp(metaclass=ApplicationMeta):
+        context = Context(CliStrategy)
+        console = Console()
+
+        def run(self, *args):
+            return self.context.execute(*args, shutup=True)
+
+    m = TestApp()
+
+    @cli.group(command_name='bookings_bench_line')
+    def bookings_bench_line(*args):
+        return True
+
+    @bookings_bench_line.command(command_name='list')
+    @bookings_bench_line.argument('--limit', nargs=1, default='25')
+    def bookings_bench_line_list(*args, limit):
+        return limit
+
+    assert m.run('bookings_bench_line list --limit 3') == '3'
+    assert m.run('bookings_bench_line list --limit=3') == '3'

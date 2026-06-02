@@ -79,6 +79,18 @@ Groups and commands form a tree. That makes CLI routing close to HTTP routing:
 
 More detail: [docs/routing.md](docs/routing.md).
 
+## Core Stream Output
+
+English: CLI progress output uses core `StreamEvent` items from
+`StreamResult`. `render_stream_result()` can print human-readable progress/log
+and result lines, or machine-readable JSON lines. The CLI layer only owns
+presentation and exit code mapping; stream semantics stay in `muscles.core`.
+
+Русский: CLI progress output использует core `StreamEvent` из `StreamResult`.
+`render_stream_result()` может печатать human-readable progress/log/result
+строки или machine-readable JSON lines. CLI слой отвечает только за presentation
+и exit code mapping; stream semantics остаётся в `muscles.core`.
+
 ## Arguments
 
 Use `@cli.argument()` for named arguments and `@cli.flag()` for boolean flags.
