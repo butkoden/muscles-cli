@@ -46,7 +46,7 @@ from muscles import CliStrategy
 
 
 class TestApp(metaclass=ApplicationMeta):
-    context = Context(CliStrategy)
+    context = Context(CliStrategy, transport="cli", params={})
 
     console = Console()
 
@@ -146,7 +146,7 @@ from muscles import CliStrategy
 
 
 class TestApp(metaclass=ApplicationMeta):
-    context = Context(CliStrategy)
+    context = Context(CliStrategy, transport="cli", params={})
 
     console = Console()
 
