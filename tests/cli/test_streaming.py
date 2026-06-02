@@ -1,6 +1,6 @@
 from io import StringIO
 
-from muscles import ActionDispatcher, ApplicationMeta, BaseStrategy, Context, StreamEvent, StreamResult, register_action
+from muscles import ActionDispatcher, ApplicationMeta, BaseStrategy, Context, StreamEvent, StreamResult
 from muscles.cli import render_stream_result
 
 
@@ -11,6 +11,11 @@ class _EchoStrategy(BaseStrategy):
 
 class _App(metaclass=ApplicationMeta):
     context = Context(_EchoStrategy)
+
+
+def add_action(app, **options):
+    handler = options.pop("handler")
+    app.action(**options)(handler)
 
 
 def test_cli_stream_text_output_uses_core_events():
@@ -68,7 +73,7 @@ def test_cli_stream_error_returns_non_zero_exit_code():
 
 def test_cli_non_stream_list_result_remains_regular_action_result():
     app = _App()
-    register_action(app, name="bookings.list", transports=["cli"], handler=lambda payload, context: [{"id": 1}])
+    add_action(app, name="bookings.list", transports=["cli"], handler=lambda payload, context: [{"id": 1}])
 
     result = ActionDispatcher(app).execute("bookings.list", {}, transport="cli")
 
