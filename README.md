@@ -46,7 +46,7 @@ from muscles.cli import CliStrategy
 
 
 class App(metaclass=ApplicationMeta):
-    context = Context(CliStrategy, transport="cli")
+    context = Context(CliStrategy)
 
     def run(self, *args):
         return self.context.execute(*args, shutup=True)

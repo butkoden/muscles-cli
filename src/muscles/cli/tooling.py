@@ -20,7 +20,7 @@ from muscles.{runtime} import {strategy}
 
 class App(metaclass=ApplicationMeta):
     config = Configurator(obj={{"main": {{"HOST": "0.0.0.0", "PORT": "8080"}}}})
-    context = Context({strategy}, transport="{transport}", params={{}})
+    context = Context({strategy}, params={{}})
 
     def run(self, *args):
         return self.context.execute(*args, shutup=True)
@@ -31,7 +31,7 @@ from muscles.cli import CliStrategy, cli
 
 
 class App(metaclass=ApplicationMeta):
-    context = Context(CliStrategy, transport="cli", params={{}})
+    context = Context(CliStrategy, params={{}})
 
     def run(self, *args):
         return self.context.execute(*args, shutup=True)
@@ -132,13 +132,12 @@ def scaffold_project(target: Path, runtime: str = "asgi", force: bool = False) -
         d.mkdir(parents=True, exist_ok=True)
 
     strategy = {"asgi": "AsgiStrategy", "wsgi": "WsgiStrategy", "full": "WsgiStrategy"}.get(runtime)
-    transport = {"asgi": "asgi", "wsgi": "wsgi", "full": "wsgi"}.get(runtime)
     app_runtime = {"asgi": "asgi", "wsgi": "wsgi", "full": "wsgi"}.get(runtime)
 
     if runtime == "cli":
         application = CLI_APP_TEMPLATE
     else:
-        application = APP_TEMPLATE.format(runtime=app_runtime, strategy=strategy, transport=transport)
+        application = APP_TEMPLATE.format(runtime=app_runtime, strategy=strategy)
 
     _write(app_dir / "__init__.py", "")
     _write(app_dir / "application.py", application)
