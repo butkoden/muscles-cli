@@ -541,11 +541,15 @@ def _build_parser() -> argparse.ArgumentParser:
             "  muscles doctor checks::       muscles doctor --json\n"
         ),
     )
-    parser.add_argument("--json", action="store_true", help="JSON output when supported")
-    parser.add_argument("--machine", action="store_true", help="Machine-readable mode (stdout JSON only)")
-    parser.add_argument("--quiet", action="store_true", help="Quiet mode")
-    parser.add_argument("--no-ansi", action="store_true", help="Disable ANSI colors/banners")
-    parser.add_argument("--timeout", type=int, default=0, help="Timeout seconds for project commands (test/bootstrap)")
+
+    def _add_global_options(target_parser: argparse.ArgumentParser) -> None:
+        target_parser.add_argument("--json", action="store_true", help="JSON output when supported")
+        target_parser.add_argument("--machine", action="store_true", help="Machine-readable mode (stdout JSON only)")
+        target_parser.add_argument("--quiet", action="store_true", help="Quiet mode")
+        target_parser.add_argument("--no-ansi", action="store_true", help="Disable ANSI colors/banners")
+        target_parser.add_argument("--timeout", type=int, default=0, help="Timeout seconds for project commands (test/bootstrap)")
+
+    _add_global_options(parser)
     subparsers = parser.add_subparsers(dest="command")
 
     new_parser = subparsers.add_parser("new", help="Create a new Muscles project")
@@ -629,7 +633,20 @@ def build_capabilities_payload() -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
-    args = parser.parse_args(argv)
+    global_parser = argparse.ArgumentParser(add_help=False)
+
+    def _add_global_options(target_parser: argparse.ArgumentParser) -> None:
+        target_parser.add_argument("--json", action="store_true", help="JSON output when supported")
+        target_parser.add_argument("--machine", action="store_true", help="Machine-readable mode (stdout JSON only)")
+        target_parser.add_argument("--quiet", action="store_true", help="Quiet mode")
+        target_parser.add_argument("--no-ansi", action="store_true", help="Disable ANSI colors/banners")
+        target_parser.add_argument("--timeout", type=int, default=0, help="Timeout seconds for project commands (test/bootstrap)")
+
+    _add_global_options(global_parser)
+    args_global, remaining_argv = global_parser.parse_known_args(argv)
+    args = parser.parse_args(remaining_argv)
+    for field in ("json", "machine", "quiet", "no_ansi", "timeout"):
+        setattr(args, field, getattr(args_global, field))
     machine_mode = getattr(args, "machine", False)
     quiet_mode = getattr(args, "quiet", False)
     no_ansi = getattr(args, "no_ansi", False)

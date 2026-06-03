@@ -42,12 +42,18 @@ def test_exit_codes_for_core_commands(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     assert main(["--machine", "capabilities"]) == tooling.EXIT_SUCCESS
     assert main(["capabilities", "--quiet"]) == tooling.EXIT_SUCCESS
+    assert main(["capabilities", "--json"]) == tooling.EXIT_SUCCESS
 
     assert main(["--machine", "new", "demo-project", "--runtime", "asgi"]) == tooling.EXIT_SUCCESS
     monkeypatch.chdir(tmp_path / "demo-project")
 
     monkeypatch.setattr(tooling, "run_project_tests", lambda *args, **kwargs: 1)
     assert main(["--machine", "test"]) == 1
+
+
+def test_global_flags_supported_after_command():
+    assert main(["inspect", "--json"]) in {tooling.EXIT_SUCCESS, tooling.EXIT_INVALID_ARGUMENT}
+    assert main(["inspect", "--app", "bad-entrypoint", "--machine"]) == tooling.EXIT_INVALID_ARGUMENT
 
 
 def test_exit_code_invalid_for_non_project(tmp_path, monkeypatch):
