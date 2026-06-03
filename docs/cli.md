@@ -209,3 +209,52 @@ def test_3_1(*args, arg31):
 
 `this_script.py help` - введенное в косноли показывает все группы команд и команды в этом пространстве
 `this_script.py <command_group> help` - введенное в косноли показывает все группы команд и команды в выбранной подгруппе
+
+## AI-friendly CLI + contract cheat sheet
+
+### Ключевые термины
+
+- `action`: API-действие (`bookings.inspect`, `health.check`)
+- `transport`: контекст выполнения (`asgi`, `wsgi`, `cli`, `full`)
+- `context`: контекст (`Context(...)`) в приложении
+- `rule`: правило валидации/роутинга
+- `schema`: класс схемы данных
+- `resource`: доменный ресурс / префикс маршрута
+- `query` / `list`: запрос на список
+- `status`: статус результата (`ok`, `warn`, `error`)
+
+### Примеры AI-работочнего потока
+
+```bash
+muscles capabilities --json
+muscles inspect --json
+muscles inspect routes --json
+muscles inspect schemas --json
+muscles doctor --json
+```
+
+`muscles inspect --json [--app app.application:App]` — единый источник истины, содержащий:
+- `actions`
+- `routes`
+- `schemas`
+- `rules`
+- `cli`
+- `sql`
+- `route_contract`
+
+### Формат help для операций
+
+Для всех команд доступны флаги:
+- `--json` — машинный JSON-формат
+- `--machine` — alias machine-режима (чистый stdout)
+- `--quiet` — подавляет неблокирующий текстовый вывод
+- `--no-ansi` — отключение ANSI/цветов и баннеров
+- `--timeout` — лимит времени для команд с запуском процессов
+
+### Exit-коды
+
+| Код | Значение |
+| --- | --- |
+| `0` | успех |
+| `1` | непредвиденная runtime-ошибка |
+| `2` | ошибка валидации/неверный usage / ошибки doctor |
