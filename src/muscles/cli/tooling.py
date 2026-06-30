@@ -770,7 +770,7 @@ def main(argv: list[str] | None = None) -> int:
         _emit("  PYTHONPATH=. python -m pytest -q")
         return EXIT_SUCCESS
     except Exception as exc:
-        if machine_mode:
+        if machine_mode or getattr(args, "json", False):
             _emit(
                 {
                     "status": "error",
@@ -784,3 +784,7 @@ def main(argv: list[str] | None = None) -> int:
             )
             return EXIT_INVALID_ARGUMENT
         return EXIT_RUNTIME_ERROR
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

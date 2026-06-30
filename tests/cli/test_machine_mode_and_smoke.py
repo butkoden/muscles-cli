@@ -14,6 +14,19 @@ def test_machine_mode_uses_stderr_for_errors(capsys):
     assert payload["error"]["type"] == "ValueError"
 
 
+def test_json_mode_uses_stderr_for_errors(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+
+    code = main(["doctor", "--json"])
+
+    assert code == tooling.EXIT_INVALID_ARGUMENT
+    out = capsys.readouterr()
+    assert out.out.strip() == ""
+    payload = json.loads(out.err)
+    assert payload["status"] == "error"
+    assert payload["error"]["type"] == "FileNotFoundError"
+
+
 def test_ai_first_smoke_workflow(tmp_path, monkeypatch, capsys):
     monkeypatch.chdir(tmp_path)
 
