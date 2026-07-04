@@ -1,8 +1,7 @@
 from __future__ import annotations
 import typing
-from typing import List
+from typing import Any, Callable, Dict, List, cast
 from functools import wraps
-from typing import Dict
 import os
 import shutil
 from .colory import Colors
@@ -121,9 +120,9 @@ class Command(CliCommand):
 
     """
 
-    def __init__(self, key: typing.Optional[str | list],
+    def __init__(self, key: str | list[str] | None,
                  function_name: typing.Optional[str] = None,
-                 handler: typing.Optional[callable] = None,
+                 handler: Callable[..., Any] | None = None,
                  description: str = '',
                  command_name: typing.Optional[str] = None):
         """
@@ -137,12 +136,12 @@ class Command(CliCommand):
         """
         if not key:
             raise Exception('`key` not specified')
-        self._key = key
+        self._key = key if isinstance(key, list) else [key]
         self._function_name = function_name
         self._handler = handler
         self._description = description
         self._parent = None
-        self._command_name = command_name if command_name else '-'.join(key)
+        self._command_name = command_name if command_name else '-'.join(self._key)
         self._arguments = []
 
     def __repr__(self):
@@ -155,14 +154,16 @@ class Command(CliCommand):
 
     @property
     def function_name(self) -> str:
-        return self._function_name
+        return self._function_name or ""
 
     @function_name.setter
     def function_name(self, function_name) -> None:
         self._function_name = function_name
 
     @property
-    def handler(self) -> callable:
+    def handler(self) -> Callable[..., Any]:
+        if self._handler is None:
+            raise RuntimeError("Command handler is not configured")
         return self._handler
 
     @handler.setter
@@ -186,7 +187,7 @@ class Command(CliCommand):
         self._command_name = command_name
 
     @property
-    def arguments(self) -> List:
+    def arguments(self) -> list[Argument]:
         return self._arguments
 
     @arguments.setter
@@ -217,18 +218,20 @@ class Command(CliCommand):
         Запускает обработку консольной команды
 
         """
-        if hasattr(self.handler, 'arguments'):
-            arguments = self.handler.arguments
+        handler = self.handler
+        handler_obj = cast(Any, handler)
+        if hasattr(handler_obj, 'arguments'):
+            arguments = handler_obj.arguments
         else:
             arguments = []
         # args, kwargs = argsparse(arguments, args)
         args, kwargs = parse_arguments(arguments, args)
         kwargs.update(_kwargs)
         params = {}
-        if hasattr(self.handler, 'arguments'):
-            for argument in self.handler.arguments:
+        if hasattr(handler_obj, 'arguments'):
+            for argument in handler_obj.arguments:
                 params.update({argument.dest: kwargs.get(argument.dest, argument.default)})
-        result = self.handler(*args, **params)
+        result = handler(*args, **params)
         return result
 
 
@@ -257,7 +260,7 @@ class Argument:
                  dest: typing.Optional[str] = None,
                  required: bool = False,
                  description: str = '',
-                 default: bool = None,
+                 default: Any = None,
                  multiple: bool = False,
                  flag_value: bool = False,
                  nargs: int = 0,
@@ -308,7 +311,7 @@ class Argument:
         ])
 
     @property
-    def value(self) -> str:
+    def value(self) -> Any:
         return self._value
 
     @value.setter
@@ -317,7 +320,7 @@ class Argument:
 
     @property
     def dest(self) -> str:
-        arg = self._argument if self._argument else self._short
+        arg = self._argument or self._short or ""
         dest = arg.replace("-", "")
         return self._dest or dest
 
@@ -328,7 +331,7 @@ class Argument:
 
     @property
     def argument(self) -> str:
-        return self._argument
+        return self._argument or ""
 
     @argument.setter
     def argument(self, argument: str) -> None:
@@ -345,18 +348,18 @@ class Argument:
 
     @property
     def short(self) -> str:
-        return self._short
+        return self._short or ""
 
     @short.setter
-    def short(self, short: str) -> None:
+    def short(self, short: str | None) -> None:
         self._short = short
 
     @property
-    def prompt(self) -> str:
+    def prompt(self) -> str | None:
         return self._prompt
 
     @prompt.setter
-    def prompt(self, prompt: str) -> None:
+    def prompt(self, prompt: str | None) -> None:
         if prompt and self._nargs <= 0:
             self._nargs = 1
         self._prompt = prompt
@@ -426,12 +429,12 @@ class Group(CliCommand):
 
     """
 
-    _commands: Dict[str] = {}
+    _commands: Dict[str, Any] = {}
 
     def __init__(self,
-                 key: typing.Optional[str | list] = None,
-                 function_name: str = None,
-                 handler: callable = None,
+                 key: str | list[str] | None = None,
+                 function_name: str | None = None,
+                 handler: Callable[..., Any] | None = None,
                  description: str = '',
                  command_name: typing.Optional[str] = None
                  ):
@@ -444,15 +447,16 @@ class Group(CliCommand):
         :param description: описание группы
         :param command_name: название команды группы
         """
-        self._children: List[(Command, Group)] = []
-        self._key = key
+        key_parts = key if isinstance(key, list) else ([key] if key else [])
+        self._children: list[Command | Group] = []
+        self._key = key_parts
         self._function_name = function_name
         self._handler = handler
         self._description = description
         self._parent = None
-        self._command_name = command_name if command_name else '-'.join(key)
-        self._arguments = []
-        self._children_by_command = {}
+        self._command_name = command_name if command_name else '-'.join(key_parts)
+        self._arguments: list[Argument] = []
+        self._children_by_command: dict[str, Command | Group] = {}
 
     def __repr__(self):
         return "Group(%s)" % ', '.join([
@@ -461,19 +465,21 @@ class Group(CliCommand):
             'handler=%s' % "{}.{}".format(str(self.handler.__module__), str(self.handler.__name__)),
             'command_name=%s' % self.command_name,
             'arguments=%s' % self.arguments,
-            'arguments=%s' % self.handler.arguments if hasattr(self.handler, 'arguments') else '[]',
+            'arguments=%s' % cast(Any, self.handler).arguments if hasattr(self.handler, 'arguments') else '[]',
         ])
 
     @property
     def function_name(self) -> str:
-        return self._function_name
+        return self._function_name or ""
 
     @function_name.setter
     def function_name(self, function_name) -> None:
         self._function_name = function_name
 
     @property
-    def handler(self) -> object:
+    def handler(self) -> Callable[..., Any]:
+        if self._handler is None:
+            raise RuntimeError("Group handler is not configured")
         return self._handler
 
     @handler.setter
@@ -481,7 +487,7 @@ class Group(CliCommand):
         self._handler = handler
 
     @property
-    def arguments(self) -> List:
+    def arguments(self) -> list[Argument]:
         return self._arguments
 
     @arguments.setter
@@ -504,7 +510,7 @@ class Group(CliCommand):
     def command_name(self, command_name) -> None:
         self._command_name = command_name
 
-    def add(self, command: (Command, Group)) -> None:
+    def add(self, command: Command | Group) -> None:
         """
         Добавляет к группе новую команду или другую группу
 
@@ -515,7 +521,7 @@ class Group(CliCommand):
         self._children_by_command[command.command_name] = command
         command.parent = self
 
-    def remove(self, command: (Command, Group)) -> None:
+    def remove(self, command: Command | Group) -> None:
         """
         Удаляет из группы команду или другую группу
 
@@ -535,7 +541,7 @@ class Group(CliCommand):
         :return:
         """
         if hasattr(self.handler, 'arguments'):
-            arguments = self.handler.arguments
+            arguments = cast(Any, self.handler).arguments
         else:
             arguments = []
         if isinstance(args, str):
@@ -547,7 +553,7 @@ class Group(CliCommand):
             raise ValueError(f"Invalid argument: {args[0]}")
         params = {}
         if hasattr(self.handler, 'arguments'):
-            for argument in self.handler.arguments:
+            for argument in cast(Any, self.handler).arguments:
                 params.update({argument.dest: kwargs.get(argument.dest, argument.default)})
         result = self.handler(*args, **params)
         if len(args) >= 1:
@@ -597,13 +603,14 @@ class Group(CliCommand):
 
         def decorator(func):
             self._default_func_prop(func)
+            func_obj = cast(Any, func)
             key = [func.__name__] + self.key
             _command = Command(key)
             _command.command_name = command_name if command_name else func.__name__
             _command.description = description if description is not None else func.__doc__
             _command.function_name = func.__name__
             _command.handler = func
-            _command.add_arguments(func.arguments)
+            _command.add_arguments(func_obj.arguments)
             self.add(_command)
             # _command = commandFactory.update(key, _command)
             setattr(func, 'command', _command)
@@ -629,13 +636,14 @@ class Group(CliCommand):
 
         def decorator(func):
             self._default_func_prop(func)
+            func_obj = cast(Any, func)
             key = [func.__name__] + self.key
             _group = Group(key)
             _group.command_name = command_name if command_name else func.__name__
             _group.function_name = func.__name__
             _group.description = description if description is not None else func.__doc__
             _group.handler = func
-            setattr(func, 'group', _group)
+            setattr(func_obj, 'group', _group)
             self.add(_group)
 
             # key = ['help'] + _group.key
@@ -680,6 +688,7 @@ class Group(CliCommand):
 
         def decorator(func):
             self._default_func_prop(func)
+            func_obj = cast(Any, func)
             _argument = Argument(
                 argument=argument,
                 short=short,
@@ -708,8 +717,8 @@ class Group(CliCommand):
             if _argument.required and _argument.nargs <= 0:
                 _argument.nargs = 1
 
-            func.arguments.append(_argument)
-            self.arguments = getattr(func, 'arguments')
+            func_obj.arguments.append(_argument)
+            self.arguments = getattr(func_obj, 'arguments')
 
             @wraps(func)
             def wrapper(*args, **kwargs):
@@ -743,6 +752,7 @@ class Group(CliCommand):
 
         def decorator(func):
             self._default_func_prop(func)
+            func_obj = cast(Any, func)
             _argument = Argument()
             _argument.argument = argument
             _argument.short = short
@@ -754,8 +764,8 @@ class Group(CliCommand):
             _argument.flag_value = flag_value
             _argument.nargs = 0
             _argument.prompt = None
-            func.arguments.append(_argument)
-            self.arguments = func.arguments
+            func_obj.arguments.append(_argument)
+            self.arguments = func_obj.arguments
 
             @wraps(func)
             def wrapper(*args, **kwargs):

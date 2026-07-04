@@ -3,7 +3,7 @@ import io
 import sys
 import shutil
 import shlex
-from typing import List, Optional
+from typing import Any, Optional, cast
 from .colory import Colors
 from .instance import cli, Console
 from .error_handler import ConsoleErrorHandler
@@ -75,7 +75,7 @@ class CliStrategy(BaseStrategy):
                 error_handler: Optional[ConsoleErrorHandler] = None,
                 shutup=False,
                 print_header=False,
-                **kwargs) -> List:
+                **kwargs) -> Any:
         """
         Первичный обработчик консольных команд
 
@@ -100,9 +100,12 @@ class CliStrategy(BaseStrategy):
             elif len(args) == 1 and isinstance(args[0], str):
                 args = tuple(shlex.split(args[0]))
             root_group = self._resolve_root_group(container, kwargs)
-            result = root_group.execute(*args)
+            if root_group is None:
+                raise RuntimeError("CLI root group is not configured")
+            result = cast(Any, root_group).execute(*args)
             if shutup:
                 sys.stdout = sys.__stdout__
             return result
         except KeyboardInterrupt:
             print(f"\n\n{Colors.WARNING}The programme was terminated (Ctrl+C).{Colors.ENDC}")
+            return None
