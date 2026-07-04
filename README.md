@@ -29,6 +29,9 @@ Notes:
 ```bash
 muscles capabilities --json
 muscles inspect --json --app app.application:App
+muscles action list --app app.application:App --json
+muscles action inspect bookings.echo --app app.application:App --json
+muscles action run bookings.echo --app app.application:App --payload-json '{"title":"Call"}' --json
 muscles routes --app app.application:App
 muscles schemas --app app.application:App
 muscles rules --app app.application:App
