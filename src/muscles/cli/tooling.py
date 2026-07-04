@@ -9,11 +9,19 @@ import re
 import shutil
 import subprocess
 from pathlib import Path
+from typing import Any
 
+from muscles.core import ActionDispatcher
+from muscles.core import ActionError
+from muscles.core import ActionExecutionError
+from muscles.core import ActionNotFound
+from muscles.core import ActionPermissionDenied
+from muscles.core import ActionValidationError
 from muscles.core import inspect_application
 from muscles.core import resolve_runtime_mode
 from muscles.core import GenerationRequest
 from .providers import default_generator_registry
+from .streaming import render_stream_result
 
 APP_TEMPLATE = """from muscles import ApplicationMeta, Configurator, Context
 from muscles.{runtime} import {strategy}
@@ -573,6 +581,21 @@ def _build_parser() -> argparse.ArgumentParser:
     inspect_parser = subparsers.add_parser("inspect", help="Inspect Muscles application contract")
     inspect_parser.add_argument("--app", required=False, help="Entrypoint in module:ClassOrObject format")
 
+    action_parser = subparsers.add_parser("action", help="List, inspect, and run Muscles actions")
+    action_subparsers = action_parser.add_subparsers(dest="action_command")
+    action_list_parser = action_subparsers.add_parser("list", help="List actions from an application contract")
+    action_list_parser.add_argument("--app", required=True, help="Entrypoint in module:ClassOrObject format")
+    action_inspect_parser = action_subparsers.add_parser("inspect", help="Inspect one action contract")
+    action_inspect_parser.add_argument("action_name")
+    action_inspect_parser.add_argument("--app", required=True, help="Entrypoint in module:ClassOrObject format")
+    action_run_parser = action_subparsers.add_parser("run", help="Run one action through the CLI transport")
+    action_run_parser.add_argument("action_name")
+    action_run_parser.add_argument("--app", required=True, help="Entrypoint in module:ClassOrObject format")
+    payload_group = action_run_parser.add_mutually_exclusive_group()
+    payload_group.add_argument("--payload-json", help="JSON object payload")
+    payload_group.add_argument("--payload-file", help="Path to JSON object payload")
+    action_run_parser.add_argument("--json-lines", action="store_true", help="Render stream actions as JSON Lines")
+
     for command_name in ("actions", "routes", "schemas", "rules", "cli", "sql"):
         command_parser = subparsers.add_parser(command_name, help=f"Inspect {command_name}")
         command_parser.add_argument("--app", required=False, help="Entrypoint in module:ClassOrObject format")
@@ -599,12 +622,81 @@ def build_inspection_payload(app=None, app_entrypoint: str | None = None) -> dic
     return payload
 
 
+def _load_action_payload(payload_json: str | None = None, payload_file: str | None = None) -> dict[str, Any]:
+    if payload_json and payload_file:
+        raise ValueError("Use either --payload-json or --payload-file, not both.")
+    raw = "{}"
+    if payload_file:
+        raw = Path(payload_file).read_text(encoding="utf-8")
+    elif payload_json:
+        raw = payload_json
+
+    payload = json.loads(raw)
+    if payload is None:
+        return {}
+    if not isinstance(payload, dict):
+        raise ValueError("Action payload must be a JSON object.")
+    return payload
+
+
+def _find_action_contract(inspection_payload: dict[str, Any], action_name: str) -> dict[str, Any]:
+    for action in inspection_payload.get("actions", []):
+        if isinstance(action, dict) and action.get("name") == action_name:
+            return action
+    raise ActionNotFound(action_name, f"Action not found: {action_name}")
+
+
+def _map_action_error(exc: Exception) -> tuple[int, dict[str, Any]]:
+    if isinstance(exc, (ActionNotFound, ActionValidationError)):
+        return EXIT_INVALID_ARGUMENT, {
+            "code": exc.code,
+            "message": exc.message,
+            "action": exc.action_name,
+            "data": exc.data,
+            "status": exc.status,
+        }
+    if isinstance(exc, (ActionPermissionDenied, ActionExecutionError)):
+        return EXIT_RUNTIME_ERROR, {
+            "code": exc.code,
+            "message": exc.message,
+            "action": exc.action_name,
+            "data": exc.data,
+            "status": exc.status,
+        }
+    if isinstance(exc, ActionError):
+        return EXIT_RUNTIME_ERROR, {
+            "code": exc.code,
+            "message": exc.message,
+            "action": exc.action_name,
+            "data": exc.data,
+            "status": exc.status,
+        }
+    return EXIT_RUNTIME_ERROR, {
+        "code": "internal_error",
+        "message": str(exc),
+        "action": None,
+        "data": None,
+        "status": 500,
+    }
+
+
+def _execute_action(app_entrypoint: str, action_name: str, payload: dict[str, Any]):
+    app = load_app_from_entrypoint(app_entrypoint)
+    return ActionDispatcher(app).execute(
+        action_name,
+        payload,
+        transport="cli",
+        metadata={"projection": "cli"},
+    )
+
+
 def build_capabilities_payload() -> dict:
     runtime_mode = resolve_runtime_mode().value
     commands = [
         {"name": "capabilities", "syntax": "muscles capabilities --json", "read_only": True, "mutating": False, "dev_only": False, "production_safe": True},
         {"name": "new", "syntax": "muscles new <project-name> --runtime asgi|wsgi|cli", "read_only": False, "mutating": True, "dev_only": True, "production_safe": False},
         {"name": "inspect", "syntax": "muscles inspect --json --app app.application:App", "read_only": True, "mutating": False, "dev_only": False, "production_safe": "redacted"},
+        {"name": "action", "syntax": "muscles action list|inspect|run --app app.application:App", "read_only": "depends_on_subcommand", "mutating": "run", "dev_only": False, "production_safe": "depends_on_action"},
         {"name": "doctor", "syntax": "muscles doctor --json", "read_only": True, "mutating": False, "dev_only": True, "production_safe": False},
         {"name": "generate", "syntax": "muscles generate resource <Name> --with-tests", "read_only": False, "mutating": True, "dev_only": True, "production_safe": False},
         {"name": "test", "syntax": "muscles test", "read_only": True, "mutating": False, "dev_only": False, "production_safe": True},
@@ -619,6 +711,7 @@ def build_capabilities_payload() -> dict:
         "recommended_ai_workflow": [
             "muscles capabilities --json",
             "muscles inspect --json",
+            "muscles action list --app app.application:App --json",
             "muscles generate ...",
             "muscles doctor --json",
             "muscles test",
@@ -679,6 +772,50 @@ def main(argv: list[str] | None = None) -> int:
             for item in payload["commands"]:
                 _emit(f" - {item['name']}: {item['syntax']}")
             return EXIT_SUCCESS
+
+        if args.command == "action":
+            as_json = getattr(args, "json", False) or machine_mode
+            try:
+                if args.action_command == "list":
+                    payload = build_inspection_payload(app_entrypoint=args.app)
+                    data = {"actions": payload.get("actions", [])}
+                    _emit(data, as_json=as_json)
+                    return EXIT_SUCCESS
+
+                if args.action_command == "inspect":
+                    payload = build_inspection_payload(app_entrypoint=args.app)
+                    data = {"action": _find_action_contract(payload, args.action_name)}
+                    _emit(data, as_json=as_json)
+                    return EXIT_SUCCESS
+
+                if args.action_command == "run":
+                    payload = _load_action_payload(args.payload_json, args.payload_file)
+                    result = _execute_action(args.app, args.action_name, payload)
+                    if result.is_stream:
+                        rendered = render_stream_result(
+                            result.value,
+                            json_lines=getattr(args, "json_lines", False) or machine_mode,
+                        )
+                        return rendered.exit_code
+                    data = {
+                        "action": result.action_name,
+                        "result": result.value,
+                        "metadata": dict(result.metadata),
+                    }
+                    if as_json:
+                        _emit(data, as_json=True)
+                    else:
+                        _emit(result.value)
+                    return EXIT_SUCCESS
+
+                raise ValueError("Action subcommand is required: list, inspect, or run.")
+            except Exception as exc:
+                exit_code, error = _map_action_error(exc)
+                if as_json:
+                    _emit({"status": "error", "error": error}, as_json=True, stderr=True)
+                else:
+                    _emit(f"error: {error['message']}", stderr=True)
+                return exit_code
 
         if args.command in {"inspect", "actions", "routes", "schemas", "rules", "cli", "sql"}:
             payload = build_inspection_payload(app_entrypoint=getattr(args, "app", None))

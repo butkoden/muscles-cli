@@ -13,7 +13,7 @@ def test_capabilities_payload_contains_contract_and_commands(monkeypatch):
     assert payload["performance_contract"]["di_signature_cached"] is True
 
     names = [item["name"] for item in payload["commands"]]
-    for required in ("new", "inspect", "doctor", "generate", "test", "capabilities"):
+    for required in ("new", "inspect", "action", "doctor", "generate", "test", "capabilities"):
         assert required in names
 
 
