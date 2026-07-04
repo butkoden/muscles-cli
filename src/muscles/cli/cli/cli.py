@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class CliCommand(ABC):
@@ -12,16 +13,16 @@ class CliCommand(ABC):
     _parent = None
 
     @property
-    def parent(self) -> CliCommand:
+    def parent(self) -> CliCommand | None:
         return self._parent
 
     @parent.setter
-    def parent(self, parent: CliCommand):
+    def parent(self, parent: CliCommand | None):
         self._parent = parent
 
     @property
-    def key(self) -> str:
-        return self._key
+    def key(self) -> list[str]:
+        return self._key or []
 
     @key.setter
     def key(self, key) -> None:
@@ -34,7 +35,7 @@ class CliCommand(ABC):
         pass
 
     @abstractmethod
-    def execute(self) -> str:
+    def execute(self, *args, **kwargs) -> Any:
         """
         Базовый Компонент может сам реализовать некоторое поведение по умолчанию
         или поручить это конкретным классам, объявив метод, содержащий поведение

@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 
 from muscles.cli.tooling import main
 from muscles.cli import tooling
@@ -74,3 +76,29 @@ def test_exit_code_invalid_for_non_project(tmp_path, monkeypatch):
     empty.mkdir()
     monkeypatch.chdir(empty)
     assert main(["--machine", "doctor"]) == tooling.EXIT_INVALID_ARGUMENT
+
+
+def test_package_public_exports_are_importable():
+    from muscles.cli import build_capabilities_payload
+    from muscles.cli import detect_project_root
+    from muscles.cli import main as cli_main
+    from muscles.cli import run_doctor
+    from muscles.cli import run_project_tests
+
+    assert callable(build_capabilities_payload)
+    assert callable(detect_project_root)
+    assert callable(cli_main)
+    assert callable(run_doctor)
+    assert callable(run_project_tests)
+
+
+def test_python_module_entrypoint_shows_help():
+    completed = subprocess.run(
+        [sys.executable, "-m", "muscles.cli", "--help"],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == tooling.EXIT_SUCCESS
+    assert "Muscles project utility CLI" in completed.stdout

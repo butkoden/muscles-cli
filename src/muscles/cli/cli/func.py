@@ -58,9 +58,9 @@ def argsparse(arguments, args):
         else:
             kwargs[argument.dest] = argument.default
         _args = iter(args)
-        arg = next(_args, False)
+        arg = next(_args, None)
         while arg:
-            next_arg = next(_args, False)
+            next_arg = next(_args, None)
             if arg == argument.argument or arg == argument.short:
                 if arg in new_args:
                     new_args.remove(arg)
@@ -69,7 +69,7 @@ def argsparse(arguments, args):
                     kwargs[argument.dest] = argument.flag_value
                 elif argument.nargs == 1:
                     '''Обрабатываем элемент со значением'''
-                    value = False if next_arg and next_arg[0:1] == '-' else next_arg
+                    value = None if isinstance(next_arg, str) and next_arg[0:1] == '-' else next_arg
                     if value:
                         if value in new_args:
                             new_args.remove(value)
@@ -85,7 +85,7 @@ def argsparse(arguments, args):
                 elif argument.nargs > 1:
                     '''Обрабатываем списки аргументов'''
                     for l in range(argument.nargs):
-                        value = False if next_arg and next_arg[0:1] == '-' else next_arg
+                        value = None if isinstance(next_arg, str) and next_arg[0:1] == '-' else next_arg
                         if value:
                             if value in new_args:
                                 new_args.remove(value)
@@ -96,7 +96,7 @@ def argsparse(arguments, args):
                         if value:
                             '''Берем следующий только если текущий был найден, 
                             иначе будем получать пропуски элементов'''
-                            next_arg = next(_args, False)
+                            next_arg = next(_args, None)
             arg = next_arg
 
         if argument.nargs > 1:

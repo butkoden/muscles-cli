@@ -9,6 +9,15 @@ from .cli import CliStrategy
 from .cli import ConsoleErrorHandler
 from .streaming import CliStreamRenderResult
 from .streaming import render_stream_result
+from .tooling import build_capabilities_payload
+from .tooling import build_inspection_payload
+from .tooling import detect_project_root
+from .tooling import generate_artifact
+from .tooling import load_app_from_entrypoint
+from .tooling import main
+from .tooling import run_doctor
+from .tooling import run_project_tests
+from .tooling import scaffold_project
 
 
 _TOOLING_EXPORTS = {
