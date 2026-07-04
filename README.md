@@ -9,6 +9,14 @@ context delegates execution to `CliStrategy`.
 Canonical ecosystem install matrix is documented in core:
 [Muscles installation matrix](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
 
+## Related Repositories
+
+- [`muscles`](https://github.com/butkoden/muscles) - core contracts, actions, inspect output and canonical documentation.
+- [`muscles-asgi`](https://github.com/butkoden/muscles-asgi) - ASGI runtime generated projects can target.
+- [`muscles-wsgi`](https://github.com/butkoden/muscles-wsgi) - WSGI runtime generated projects can target.
+- [`muscles-mcp`](https://github.com/butkoden/muscles-mcp) - MCP projection over the same action contracts.
+- [`muscles-benchmarks`](https://github.com/butkoden/muscles-benchmarks) - CLI regression and architecture checks.
+
 ## Project Scaffolding
 
 Use canonical command `muscles new`:
