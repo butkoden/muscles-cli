@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests
         working-directory: muscles-cli
-        run: PYTHONPATH=.:../muscles/src:src python -m pytest -q
+        run: PYTHONPATH=.:../muscles/src:src python -m pytest --import-mode=importlib -q
 
   build:
     runs-on: ubuntu-latest
