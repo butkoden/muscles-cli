@@ -6,6 +6,10 @@ context delegates execution to `CliStrategy`.
 
 ## Installation
 
+```bash
+pip install muscles-cli
+```
+
 Canonical ecosystem install matrix is documented in core:
 [Muscles installation matrix](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
 
