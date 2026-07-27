@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "muscles-cli"
-version = "1.0.0"
+version = "1.0.1"
 description = "Muscles CLI runtime for shared command routing and strategy execution"
 readme = "README.md"
 authors = ["Denis B. <denis@butko.info>"]
