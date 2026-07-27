@@ -12,6 +12,18 @@ authors = ["Denis B. <denis@butko.info>"]
 license = "MIT"
 packages = [{include = "muscles", from = "src"}]
 
+[tool.poetry.urls]
+Homepage = "https://github.com/butkoden/muscles-cli"
+Repository = "https://github.com/butkoden/muscles-cli"
+Documentation = "https://github.com/butkoden/muscles-cli#readme"
+PyPI = "https://pypi.org/project/muscles-cli/"
+Releases = "https://github.com/butkoden/muscles-cli/releases"
+"muscles" = "https://pypi.org/project/muscles/"
+"muscles-asgi" = "https://pypi.org/project/muscles-asgi/"
+"muscles-wsgi" = "https://pypi.org/project/muscles-wsgi/"
+"muscles-mcp" = "https://pypi.org/project/muscles-mcp/"
+"muscles-benchmarks" = "https://pypi.org/project/muscles-benchmarks/"
+
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
