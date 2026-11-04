@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --pre "muscles>=1.0.0rc1,<2.0.0"
           python -m pip install "watchdog>=4,<5" "dnspython==2.6.1" pyyaml "werkzeug==2.1.1" "jsonschema>=4.18,<5" pytest
-          python -m pip install -e . --no-deps
+          python -m pip install . --no-deps
 
       - name: Run tests
         working-directory: muscles-cli
