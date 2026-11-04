@@ -83,6 +83,11 @@ app = App()
 assert app.run("bookings", "remove", "1") == "removed 1"
 ```
 
+In a console entry point, call `app.run()` without arguments. `CliStrategy`
+then reads the process arguments from `sys.argv[1:]`; application code does not
+need to parse or forward them manually. Passing arguments explicitly is useful
+for in-process calls and focused examples like the assertion above.
+
 ## Routing Model
 
 Groups and commands form a tree. That makes CLI routing close to HTTP routing:

@@ -1,0 +1,2558 @@
+{
+  "version": "1.0.0",
+  "schema_version": 1,
+  "project": {
+    "name": "muscles-cli",
+    "is_monorepo": false,
+    "total_files": 36,
+    "entry_points": [
+      "src/muscles/cli/__main__.py"
+    ],
+    "tech_stack": [
+      {
+        "name": "Python",
+        "version": null,
+        "category": "language"
+      }
+    ],
+    "entry_candidates": [
+      "src/muscles/cli/__main__.py"
+    ],
+    "graph_mode": "flow"
+  },
+  "nodes": [
+    {
+      "id": "class:src/muscles/cli/cli/cli.py:CliCommand",
+      "type": "class",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "CliCommand",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/cli/colory.py:Colors",
+      "type": "class",
+      "filePath": "src/muscles/cli/cli/colory.py",
+      "name": "Colors",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/cli/command.py:Argument",
+      "type": "class",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "Argument",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/cli/command.py:Command",
+      "type": "class",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "Command",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/cli/command.py:Group",
+      "type": "class",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "Group",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/providers.py:CliCommandGeneratorProvider",
+      "type": "class",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "CliCommandGeneratorProvider",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/providers.py:CoreGeneratorProvider",
+      "type": "class",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "CoreGeneratorProvider",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles/cli/streaming.py:CliStreamRenderResult",
+      "type": "class",
+      "filePath": "src/muscles/cli/streaming.py",
+      "name": "CliStreamRenderResult",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "file:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "filePath": ".github/workflows/ci.yml",
+      "language": "yaml",
+      "symbolCount": 0,
+      "lineCount": 14,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 3,
+      "tags": [
+        "config",
+        "ci"
+      ],
+      "summary": "GitHub Actions CI/CD workflow definition."
+    },
+    {
+      "id": "file:.github/workflows/release.yml",
+      "type": "pipeline",
+      "filePath": ".github/workflows/release.yml",
+      "language": "yaml",
+      "symbolCount": 0,
+      "lineCount": 48,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 4,
+      "tags": [
+        "config",
+        "ci"
+      ],
+      "summary": "GitHub Actions CI/CD workflow definition."
+    },
+    {
+      "id": "file:README.md",
+      "type": "document",
+      "filePath": "README.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 105,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 5,
+      "tags": [],
+      "summary": "Project overview and entry point for new readers."
+    },
+    {
+      "id": "file:docs/cli.md",
+      "type": "document",
+      "filePath": "docs/cli.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 328,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 6,
+      "tags": [],
+      "summary": "Documentation: cli.md."
+    },
+    {
+      "id": "file:docs/release-candidate.md",
+      "type": "document",
+      "filePath": "docs/release-candidate.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 11,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 7,
+      "tags": [],
+      "summary": "Documentation: release-candidate.md."
+    },
+    {
+      "id": "file:docs/release.md",
+      "type": "document",
+      "filePath": "docs/release.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 59,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 8,
+      "tags": [],
+      "summary": "Documentation: release.md."
+    },
+    {
+      "id": "file:docs/routing.md",
+      "type": "document",
+      "filePath": "docs/routing.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 30,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 9,
+      "tags": [],
+      "summary": "Documentation: routing.md."
+    },
+    {
+      "id": "file:pyproject.toml",
+      "type": "config",
+      "filePath": "pyproject.toml",
+      "language": "toml",
+      "symbolCount": 0,
+      "lineCount": 32,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 10,
+      "tags": [
+        "config"
+      ],
+      "summary": "Python project metadata, dependencies, and build configuration."
+    },
+    {
+      "id": "file:src/muscles/cli/Makefile",
+      "type": "config",
+      "filePath": "src/muscles/cli/Makefile",
+      "language": "makefile",
+      "symbolCount": 0,
+      "lineCount": 8,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 11,
+      "tags": [
+        "config"
+      ],
+      "summary": "Build, test, and task automation targets."
+    },
+    {
+      "id": "file:src/muscles/cli/__about__.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/__about__.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 3,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 12,
+      "tags": [],
+      "summary": "CLI module __about__ (3 symbols).",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/__init__.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/__init__.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 40,
+      "complexity": "simple",
+      "pagerank": 0.044691,
+      "communityId": 1,
+      "tags": [],
+      "summary": "CLI module __init__ defining __getattr__.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles/cli/__main__.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/__main__.py",
+      "language": "python",
+      "symbolCount": 0,
+      "lineCount": 2,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "entry_point"
+      ],
+      "summary": "CLI module __main__.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/__init__.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/__init__.py",
+      "language": "python",
+      "symbolCount": 0,
+      "lineCount": 5,
+      "complexity": "simple",
+      "pagerank": 0.030739,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module __init__.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/cli.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 27,
+      "complexity": "moderate",
+      "pagerank": 0.044096,
+      "communityId": 2,
+      "tags": [],
+      "summary": "CLI module cli defining CliCommand, parent, parent.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/colory.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/colory.py",
+      "language": "python",
+      "symbolCount": 1,
+      "lineCount": 6,
+      "complexity": "simple",
+      "pagerank": 0.038707,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module colory defining Colors.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/command.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "language": "python",
+      "symbolCount": 67,
+      "lineCount": 743,
+      "complexity": "complex",
+      "pagerank": 0.047144,
+      "communityId": 2,
+      "tags": [],
+      "summary": "CLI module command defining print_help, Command, __init__.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/constants.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/constants.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 2,
+      "complexity": "simple",
+      "pagerank": 0.020995,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module constants (3 symbols).",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/error_handler.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/error_handler.py",
+      "language": "python",
+      "symbolCount": 2,
+      "lineCount": 3,
+      "complexity": "simple",
+      "pagerank": 0.02535,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module error_handler defining ConsoleErrorHandler, handler.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/func.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/func.py",
+      "language": "python",
+      "symbolCount": 4,
+      "lineCount": 232,
+      "complexity": "moderate",
+      "pagerank": 0.034264,
+      "communityId": 2,
+      "tags": [],
+      "summary": "CLI module func defining argsparse, parse_arguments, process_argument.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/instance.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/instance.py",
+      "language": "python",
+      "symbolCount": 6,
+      "lineCount": 30,
+      "complexity": "moderate",
+      "pagerank": 0.02535,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module instance defining Console, __init__, __call__.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/cli/strategy.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/cli/strategy.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 89,
+      "complexity": "moderate",
+      "pagerank": 0.020907,
+      "communityId": 0,
+      "tags": [],
+      "summary": "CLI module strategy defining flushfile, __init__, write.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/providers.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/providers.py",
+      "language": "python",
+      "symbolCount": 10,
+      "lineCount": 180,
+      "complexity": "moderate",
+      "pagerank": 0.083548,
+      "communityId": 1,
+      "tags": [],
+      "summary": "CLI module providers defining _write, _safe_write_file, CliCommandGeneratorProvider.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:src/muscles/cli/streaming.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/streaming.py",
+      "language": "python",
+      "symbolCount": 2,
+      "lineCount": 34,
+      "complexity": "simple",
+      "pagerank": 0.078975,
+      "communityId": 1,
+      "tags": [],
+      "summary": "CLI module streaming defining CliStreamRenderResult, render_stream_result.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles/cli/tooling.py",
+      "type": "file",
+      "filePath": "src/muscles/cli/tooling.py",
+      "language": "python",
+      "symbolCount": 33,
+      "lineCount": 902,
+      "complexity": "complex",
+      "pagerank": 0.124536,
+      "communityId": 1,
+      "tags": [],
+      "summary": "CLI module tooling defining _write, scaffold_project, generate_artifact.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/__init__.py",
+      "type": "file",
+      "filePath": "tests/__init__.py",
+      "language": "python",
+      "symbolCount": 0,
+      "lineCount": 0,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 13,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for __init__.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/__init__.py",
+      "type": "file",
+      "filePath": "tests/cli/__init__.py",
+      "language": "python",
+      "symbolCount": 0,
+      "lineCount": 0,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 13,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for __init__.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_action_command.py",
+      "type": "file",
+      "filePath": "tests/cli/test_action_command.py",
+      "language": "python",
+      "symbolCount": 7,
+      "lineCount": 120,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for action_command.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_capabilities_command.py",
+      "type": "file",
+      "filePath": "tests/cli/test_capabilities_command.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 29,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for capabilities_command.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_cli.py",
+      "type": "file",
+      "filePath": "tests/cli/test_cli.py",
+      "language": "python",
+      "symbolCount": 14,
+      "lineCount": 345,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 0,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for cli.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_doctor_and_test_commands.py",
+      "type": "file",
+      "filePath": "tests/cli/test_doctor_and_test_commands.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 24,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for test_doctor_and_commands.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_generator_providers.py",
+      "type": "file",
+      "filePath": "tests/cli/test_generator_providers.py",
+      "language": "python",
+      "symbolCount": 2,
+      "lineCount": 11,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for generator_providers.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_generators_command.py",
+      "type": "file",
+      "filePath": "tests/cli/test_generators_command.py",
+      "language": "python",
+      "symbolCount": 4,
+      "lineCount": 44,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for generators_command.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_inspect_command.py",
+      "type": "file",
+      "filePath": "tests/cli/test_inspect_command.py",
+      "language": "python",
+      "symbolCount": 2,
+      "lineCount": 29,
+      "complexity": "simple",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for inspect_command.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_machine_mode_and_smoke.py",
+      "type": "file",
+      "filePath": "tests/cli/test_machine_mode_and_smoke.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 92,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for machine_mode_and_smoke.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:tests/cli/test_new_command.py",
+      "type": "file",
+      "filePath": "tests/cli/test_new_command.py",
+      "language": "python",
+      "symbolCount": 6,
+      "lineCount": 53,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for new_command.",
+      "primaryOwner": "Denis B"
+    },
+    {
+      "id": "file:tests/cli/test_streaming.py",
+      "type": "file",
+      "filePath": "tests/cli/test_streaming.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 63,
+      "complexity": "moderate",
+      "pagerank": 0.016552,
+      "communityId": 1,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for streaming.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "function:src/muscles/cli/__init__.py:__getattr__",
+      "type": "function",
+      "filePath": "src/muscles/cli/__init__.py",
+      "name": "__getattr__",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/cli.py:add",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "add",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/cli.py:execute",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "execute",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/cli.py:key",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "key",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/cli.py:parent",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "parent",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/cli.py:remove",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/cli.py",
+      "name": "remove",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:__init__",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "__init__",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:__repr__",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "__repr__",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:_default_func_prop",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "_default_func_prop",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:_help",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "_help",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:add",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "add",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:add_argument",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "add_argument",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:add_arguments",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "add_arguments",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:argument",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "argument",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:arguments",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "arguments",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:command",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "command",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:command_name",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "command_name",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:default",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "default",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:description",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "description",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:dest",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "dest",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:execute",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "execute",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:flag",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "flag",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:flag_value",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "flag_value",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:function_name",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "function_name",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:group",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "group",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:handler",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "handler",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:help",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "help",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:hide",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "hide",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:multiple",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "multiple",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:nargs",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "nargs",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:print_help",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "print_help",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:prompt",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "prompt",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:remove",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "remove",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:required",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "required",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:short",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "short",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/cli/command.py:value",
+      "type": "function",
+      "filePath": "src/muscles/cli/cli/command.py",
+      "name": "value",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/providers.py:_safe_write_file",
+      "type": "function",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "_safe_write_file",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/providers.py:_write",
+      "type": "function",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "_write",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/providers.py:default_generator_registry",
+      "type": "function",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "default_generator_registry",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/providers.py:generate",
+      "type": "function",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "generate",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/providers.py:supports",
+      "type": "function",
+      "filePath": "src/muscles/cli/providers.py",
+      "name": "supports",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/streaming.py:render_stream_result",
+      "type": "function",
+      "filePath": "src/muscles/cli/streaming.py",
+      "name": "render_stream_result",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_build_parser",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_build_parser",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_collect_diagnostic_checks",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_collect_diagnostic_checks",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_entrypoint_candidates",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_entrypoint_candidates",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_execute_action",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_execute_action",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_find_action_contract",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_find_action_contract",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_has_map_model_autoincrement",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_has_map_model_autoincrement",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_has_nested_cli_options",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_has_nested_cli_options",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_has_otel_hooks",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_has_otel_hooks",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_load_action_payload",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_load_action_payload",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_load_project_app",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_load_project_app",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_map_action_error",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_map_action_error",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:_write",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "_write",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:build_capabilities_payload",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "build_capabilities_payload",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:build_inspection_payload",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "build_inspection_payload",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:detect_project_root",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "detect_project_root",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:generate_artifact",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "generate_artifact",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:load_app_from_entrypoint",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "load_app_from_entrypoint",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:main",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "main",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:run_doctor",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "run_doctor",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:run_project_tests",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "run_project_tests",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles/cli/tooling.py:scaffold_project",
+      "type": "function",
+      "filePath": "src/muscles/cli/tooling.py",
+      "name": "scaffold_project",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/muscles/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/cli.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/__init__.py",
+      "target": "file:src/muscles/cli/streaming.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/__init__.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/__init__.py",
+      "target": "function:src/muscles/cli/__init__.py:__getattr__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/__main__.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/colory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/command.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/error_handler.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/func.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/instance.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/__init__.py",
+      "target": "file:src/muscles/cli/cli/strategy.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "class:src/muscles/cli/cli/cli.py:CliCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "function:src/muscles/cli/cli/cli.py:add",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "function:src/muscles/cli/cli/cli.py:execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "function:src/muscles/cli/cli/cli.py:key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "function:src/muscles/cli/cli/cli.py:parent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py",
+      "target": "function:src/muscles/cli/cli/cli.py:remove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py::CliCommand",
+      "target": "function:src/muscles/cli/cli/cli.py:add",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py::CliCommand",
+      "target": "function:src/muscles/cli/cli/cli.py:execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py::CliCommand",
+      "target": "function:src/muscles/cli/cli/cli.py:key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py::CliCommand",
+      "target": "function:src/muscles/cli/cli/cli.py:parent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/cli.py::CliCommand",
+      "target": "function:src/muscles/cli/cli/cli.py:remove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/colory.py",
+      "target": "class:src/muscles/cli/cli/colory.py:Colors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "class:src/muscles/cli/cli/command.py:Argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "class:src/muscles/cli/cli/command.py:Command",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "class:src/muscles/cli/cli/command.py:Group",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "file:src/muscles/cli/cli/cli.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "file:src/muscles/cli/cli/colory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "file:src/muscles/cli/cli/func.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:__repr__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:_default_func_prop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:_help",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:add",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:add_argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:add_arguments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:arguments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:command",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:command_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:default",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:description",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:dest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:flag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:flag_value",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:function_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:group",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:handler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:help",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:hide",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:multiple",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:nargs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:print_help",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:remove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:required",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:short",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py",
+      "target": "function:src/muscles/cli/cli/command.py:value",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:__repr__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:default",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:description",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:dest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:flag_value",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:hide",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:multiple",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:nargs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:required",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:short",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Argument",
+      "target": "function:src/muscles/cli/cli/command.py:value",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:__repr__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:add_argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:add_arguments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:arguments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:command_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:description",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:function_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Command",
+      "target": "function:src/muscles/cli/cli/command.py:handler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:__repr__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:_default_func_prop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:_help",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:add",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:argument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:arguments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:command",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:command_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:description",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:flag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:function_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:group",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:handler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:help",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/command.py::Group",
+      "target": "function:src/muscles/cli/cli/command.py:remove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/instance.py",
+      "target": "file:src/muscles/cli/cli/command.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/strategy.py",
+      "target": "file:src/muscles/cli/cli/colory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/strategy.py",
+      "target": "file:src/muscles/cli/cli/constants.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/strategy.py",
+      "target": "file:src/muscles/cli/cli/error_handler.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/cli/strategy.py",
+      "target": "file:src/muscles/cli/cli/instance.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "class:src/muscles/cli/providers.py:CliCommandGeneratorProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "class:src/muscles/cli/providers.py:CoreGeneratorProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "function:src/muscles/cli/providers.py:_safe_write_file",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "function:src/muscles/cli/providers.py:_write",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "function:src/muscles/cli/providers.py:default_generator_registry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "function:src/muscles/cli/providers.py:generate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py",
+      "target": "function:src/muscles/cli/providers.py:supports",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py::CliCommandGeneratorProvider",
+      "target": "function:src/muscles/cli/providers.py:generate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py::CliCommandGeneratorProvider",
+      "target": "function:src/muscles/cli/providers.py:supports",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py::CoreGeneratorProvider",
+      "target": "function:src/muscles/cli/providers.py:generate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/providers.py::CoreGeneratorProvider",
+      "target": "function:src/muscles/cli/providers.py:supports",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/streaming.py",
+      "target": "class:src/muscles/cli/streaming.py:CliStreamRenderResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/streaming.py",
+      "target": "function:src/muscles/cli/streaming.py:render_stream_result",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "file:src/muscles/cli/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "file:src/muscles/cli/streaming.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_build_parser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_collect_diagnostic_checks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_entrypoint_candidates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_execute_action",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_find_action_contract",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_has_map_model_autoincrement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_has_nested_cli_options",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_has_otel_hooks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_load_action_payload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_load_project_app",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_map_action_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:_write",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:build_capabilities_payload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:build_inspection_payload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:detect_project_root",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:generate_artifact",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:load_app_from_entrypoint",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:run_doctor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:run_project_tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles/cli/tooling.py",
+      "target": "function:src/muscles/cli/tooling.py:scaffold_project",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_action_command.py",
+      "target": "file:src/muscles/cli/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_action_command.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_capabilities_command.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_cli.py",
+      "target": "file:src/muscles/cli/cli/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_cli.py",
+      "target": "file:src/muscles/cli/cli/cli.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_cli.py",
+      "target": "file:src/muscles/cli/cli/command.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_doctor_and_test_commands.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_generator_providers.py",
+      "target": "file:src/muscles/cli/providers.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_generators_command.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_inspect_command.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_machine_mode_and_smoke.py",
+      "target": "file:src/muscles/cli/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_machine_mode_and_smoke.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_new_command.py",
+      "target": "file:src/muscles/cli/tooling.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/cli/test_streaming.py",
+      "target": "file:src/muscles/cli/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:cli",
+      "name": "CLI",
+      "description": "",
+      "nodeIds": [
+        "file:src/muscles/cli/Makefile",
+        "file:src/muscles/cli/__about__.py",
+        "file:src/muscles/cli/__init__.py",
+        "file:src/muscles/cli/__main__.py",
+        "file:src/muscles/cli/cli/__init__.py",
+        "file:src/muscles/cli/cli/cli.py",
+        "file:src/muscles/cli/cli/colory.py",
+        "file:src/muscles/cli/cli/command.py",
+        "file:src/muscles/cli/cli/constants.py",
+        "file:src/muscles/cli/cli/error_handler.py",
+        "file:src/muscles/cli/cli/func.py",
+        "file:src/muscles/cli/cli/instance.py",
+        "file:src/muscles/cli/cli/strategy.py",
+        "file:src/muscles/cli/providers.py",
+        "file:src/muscles/cli/streaming.py",
+        "file:src/muscles/cli/tooling.py"
+      ],
+      "display_order": 0,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:application",
+      "name": "Application",
+      "description": "",
+      "nodeIds": [
+        "file:README.md",
+        "file:pyproject.toml"
+      ],
+      "display_order": 1,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:config",
+      "name": "Config",
+      "description": "",
+      "nodeIds": [
+        "file:.github/workflows/ci.yml",
+        "file:.github/workflows/release.yml"
+      ],
+      "display_order": 2,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:docs-tooling",
+      "name": "Docs & Tooling",
+      "description": "",
+      "nodeIds": [
+        "file:docs/cli.md",
+        "file:docs/release-candidate.md",
+        "file:docs/release.md",
+        "file:docs/routing.md"
+      ],
+      "display_order": 3,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:test",
+      "name": "Test",
+      "description": "",
+      "nodeIds": [
+        "file:tests/__init__.py",
+        "file:tests/cli/__init__.py",
+        "file:tests/cli/test_action_command.py",
+        "file:tests/cli/test_capabilities_command.py",
+        "file:tests/cli/test_cli.py",
+        "file:tests/cli/test_doctor_and_test_commands.py",
+        "file:tests/cli/test_generator_providers.py",
+        "file:tests/cli/test_generators_command.py",
+        "file:tests/cli/test_inspect_command.py",
+        "file:tests/cli/test_machine_mode_and_smoke.py",
+        "file:tests/cli/test_new_command.py",
+        "file:tests/cli/test_streaming.py"
+      ],
+      "display_order": 4,
+      "order_basis": "canonical"
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "target_path": "README.md",
+      "page_type": "repo_overview",
+      "title": "README.md",
+      "depth": 0,
+      "kind": "overview",
+      "reason": "Start here for the end-to-end picture before diving into the code.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 2,
+      "target_path": "src/muscles/cli/__main__.py",
+      "page_type": "file_page",
+      "title": "__main__.py",
+      "depth": 0,
+      "kind": "code",
+      "reason": "An entry point \u2014 execution and imports fan out from here.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 3,
+      "target_path": "src/muscles/cli/cli/cli.py",
+      "page_type": "file_page",
+      "title": "cli.py",
+      "depth": 0,
+      "kind": "code",
+      "reason": "An entry point \u2014 execution and imports fan out from here.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 4,
+      "target_path": "src/muscles/cli/tooling.py",
+      "page_type": "file_page",
+      "title": "tooling.py",
+      "depth": 1,
+      "kind": "code",
+      "reason": "Directly used by the entry points above; a core collaborator.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 5,
+      "target_path": "src/muscles/cli/providers.py",
+      "page_type": "file_page",
+      "title": "providers.py",
+      "depth": 2,
+      "kind": "code",
+      "reason": "Reached 2 imports deep \u2014 a supporting building block.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 6,
+      "target_path": "src/muscles/cli/streaming.py",
+      "page_type": "file_page",
+      "title": "streaming.py",
+      "depth": 2,
+      "kind": "code",
+      "reason": "Reached 2 imports deep \u2014 a supporting building block.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 7,
+      "target_path": "src/muscles/cli/cli/command.py",
+      "page_type": "file_page",
+      "title": "command.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "Off the import path from the entry points \u2014 a standalone or supporting file.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 8,
+      "target_path": "src/muscles/cli/__init__.py",
+      "page_type": "file_page",
+      "title": "__init__.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "Off the import path from the entry points \u2014 a standalone or supporting file.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 9,
+      "target_path": "src/muscles/cli/cli/colory.py",
+      "page_type": "file_page",
+      "title": "colory.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "Off the import path from the entry points \u2014 a standalone or supporting file.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 10,
+      "target_path": "src/muscles/cli/cli/func.py",
+      "page_type": "file_page",
+      "title": "func.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "Off the import path from the entry points \u2014 a standalone or supporting file.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 11,
+      "target_path": "src/muscles/cli/cli/__init__.py",
+      "page_type": "file_page",
+      "title": "__init__.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "Off the import path from the entry points \u2014 a standalone or supporting file.",
+      "layer_id": "layer:cli"
+    },
+    {
+      "order": 12,
+      "target_path": "tests/__init__.py",
+      "page_type": "file_page",
+      "title": "__init__.py",
+      "depth": 4,
+      "kind": "code",
+      "reason": "The test suite \u2014 how the system's behavior is verified.",
+      "layer_id": "layer:test"
+    }
+  ],
+  "modules": [
+    {
+      "id": "module:src-muscles-cli",
+      "name": "CLI",
+      "path": "src/muscles/cli",
+      "layerId": "layer:cli",
+      "nodeIds": [
+        "file:src/muscles/cli/Makefile",
+        "file:src/muscles/cli/__about__.py",
+        "file:src/muscles/cli/__init__.py",
+        "file:src/muscles/cli/__main__.py",
+        "file:src/muscles/cli/cli/__init__.py",
+        "file:src/muscles/cli/cli/cli.py",
+        "file:src/muscles/cli/cli/colory.py",
+        "file:src/muscles/cli/cli/command.py",
+        "file:src/muscles/cli/cli/constants.py",
+        "file:src/muscles/cli/cli/error_handler.py",
+        "file:src/muscles/cli/cli/func.py",
+        "file:src/muscles/cli/cli/instance.py",
+        "file:src/muscles/cli/cli/strategy.py",
+        "file:src/muscles/cli/providers.py",
+        "file:src/muscles/cli/streaming.py",
+        "file:src/muscles/cli/tooling.py"
+      ],
+      "wholeLayer": true,
+      "language": "python"
+    },
+    {
+      "id": "module:docs",
+      "name": "Docs & Tooling",
+      "path": "docs",
+      "layerId": "layer:docs-tooling",
+      "nodeIds": [
+        "file:docs/cli.md",
+        "file:docs/release-candidate.md",
+        "file:docs/release.md",
+        "file:docs/routing.md"
+      ],
+      "wholeLayer": true,
+      "language": "markdown"
+    },
+    {
+      "id": "module:tests",
+      "name": "Test",
+      "path": "tests",
+      "layerId": "layer:test",
+      "nodeIds": [
+        "file:tests/__init__.py",
+        "file:tests/cli/__init__.py",
+        "file:tests/cli/test_action_command.py",
+        "file:tests/cli/test_capabilities_command.py",
+        "file:tests/cli/test_cli.py",
+        "file:tests/cli/test_doctor_and_test_commands.py",
+        "file:tests/cli/test_generator_providers.py",
+        "file:tests/cli/test_generators_command.py",
+        "file:tests/cli/test_inspect_command.py",
+        "file:tests/cli/test_machine_mode_and_smoke.py",
+        "file:tests/cli/test_new_command.py",
+        "file:tests/cli/test_streaming.py"
+      ],
+      "wholeLayer": true,
+      "language": "python"
+    }
+  ]
+}

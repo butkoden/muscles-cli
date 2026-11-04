@@ -1,0 +1,35 @@
+{
+  "last_sync_commit": "b2d0ecf9d1b879ec9c63c0f8d663ad00f3e761dd",
+  "total_pages": 35,
+  "docs_mode": "deterministic",
+  "docs_enabled": false,
+  "phase_timings": {
+    "traverse": 119.63,
+    "co_change": 1.47,
+    "git": 120.56,
+    "parse": 4.84,
+    "graph.imports": 0.0,
+    "graph.type_refs": 0.0,
+    "graph.heritage": 0.0,
+    "graph.calls": 0.0,
+    "dynamic_hints": 0.03,
+    "graph.metrics": 0.01,
+    "graph.communities": 0.02,
+    "external_systems": 0.01,
+    "dead_code": 0.09,
+    "decisions": 0.03,
+    "health": 0.76,
+    "knowledge_graph.skeleton": 0.0,
+    "graph.flows": 0.0
+  },
+  "knowledge_graph": {
+    "version": "1.0.0",
+    "node_count": 107,
+    "layer_count": 5,
+    "tour_steps": 12,
+    "has_summaries": true,
+    "fingerprint": "fa55d7a463ebf7d8"
+  },
+  "store_format_version": 2,
+  "written_by_version": "0.39.0"
+}
