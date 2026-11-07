@@ -4,6 +4,7 @@ from typing import Any, Callable, Dict, List, cast
 from functools import wraps
 import os
 import shutil
+from difflib import get_close_matches
 from .colory import Colors
 from .func import argsparse, parse_arguments
 from .cli import CliCommand
@@ -560,10 +561,18 @@ class Group(CliCommand):
             command = self._children_by_command.get(args[0])
             if command:
                 return command.execute(*args[1:], **kwargs)
-            print(f"\n")
-
             if len(args[0]) > 0:
-                raise Exception("Command `%s` not found" % args[0])
+                available_commands = list(self._children_by_command)
+                suggestions = [name for name in available_commands if name.startswith(args[0])]
+                if not suggestions:
+                    suggestions = get_close_matches(args[0], available_commands, n=1, cutoff=0.45)
+
+                if suggestions:
+                    print(f"Команда `{args[0]}` не найдена. Возможно, вы имели в виду `{suggestions[0]}`?")
+                elif available_commands:
+                    print(f"Команда `{args[0]}` не найдена. Доступные команды: {', '.join(available_commands)}")
+                else:
+                    print(f"Команда `{args[0]}` не найдена.")
         return result
 
     def help(self, *args, **kwargs):
