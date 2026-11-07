@@ -216,7 +216,7 @@ def test_cli_dest():
     assert result == 'val51'
 
 
-def test_cli_subgroup():
+def test_cli_subgroup(capsys):
     """
     Проверяем CLI
     :return:
@@ -253,11 +253,10 @@ def test_cli_subgroup():
     result = m.run('test_7_0', 'test_7_1', 'test_7_2')
     assert result == 2
 
-    with pytest.raises(Exception, match="Command `test_7_1` not found"):
-        m.run('test_7_1')
+    assert m.context.execute('test_7_1', shutup=True) is None
 
 
-def test_cli_group_command_index_updates_on_add_and_remove():
+def test_cli_group_command_index_updates_on_add_and_remove(capsys):
     group = Group(['root'], handler=lambda *args: 'root')
     command = Command(['child'], handler=lambda *args: 'child')
     command.command_name = 'child'
@@ -270,8 +269,8 @@ def test_cli_group_command_index_updates_on_add_and_remove():
     group.remove(command)
 
     assert 'child' not in group._children_by_command
-    with pytest.raises(Exception, match="Command `child` not found"):
-        group.execute('child')
+    group.execute('child')
+    assert "Команда `child` не найдена." in capsys.readouterr().out
 
 
 def test_cli_help():
